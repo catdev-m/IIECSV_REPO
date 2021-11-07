@@ -6,9 +6,9 @@
         <property name="portNumber" value="3306"/>
         <property name="databaseName" value="iicesv_db"/>
         <property name="User" value="root"/>
-        <property name="Password" value="Root1234"/>
+        <property name="Password" value=""/>
         <property name="URL" value="jdbc:mysql://localhost:3306/iicesv_db?zeroDateTimeBehavior=convertToNull"/>
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
     </jdbc-connection-pool>
-    <jdbc-resource enabled="true" jndi-name="java:app/iicesv/jdbc" object-type="user" pool-name="mysql_iicesv_db_rootPool"/>
+    <jdbc-resource enabled="true" jndi-name="jdbc/iicesv" object-type="user" pool-name="mysql_iicesv_db_rootPool"/>
 </resources>
