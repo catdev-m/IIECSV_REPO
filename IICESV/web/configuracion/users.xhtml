@@ -1,0 +1,120 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="content">
+        <div class="p-grid"> 
+            <div class="p-col-12">
+                <p:growl id="msg"/>
+                <h:form id="formUsr">
+                    <div class="card">
+                        <div class="ui-fluid p-formgrid p-grid">
+
+
+
+                            <div class="p-field p-col-12 p-md-5">
+                                <p:outputLabel value="Usuario App" for="usrApp" />
+                                <p:inputText maxlength="255" autocomplete="off" id="usrApp" value="#{loginSecurity.formUsrUserApp}"  placeholder="Usuario App" />
+                            </div>
+
+                            <div class="p-field p-col-12 p-md-5">
+                                <p:outputLabel value="Nombre Completo" for="fullName" />
+                                <p:inputText maxlength="400" autocomplete="off" id="fullName" value="#{loginSecurity.formUsrNobreCompleto}"  placeholder="Nombre Completo" />
+                            </div>
+                            <div class="p-field p-col-12 p-md-5">
+                                <p:outputLabel value="Clave" for="pasw" />
+                                <p:password maxlength="20" autocomplete="off" id="pasw" redisplay="true" value="#{loginSecurity.formUsrPassword}"  placeholder="Clave" />                                 
+                            </div>
+                            <div class="p-field p-col-12 p-md-5">
+                                <p:outputLabel value="Correo Electronico" for="email" />
+                                <p:inputText maxlength="350" autocomplete="off" id="email" value="#{loginSecurity.formUsrCorreoElectronico}"  placeholder="Correo Electronico" />
+
+                            </div>
+                            <div class="p-field p-col-12 p-md-5">
+                                <p:outputLabel value="Asignar Role" for="idRoles" />
+                                <p:selectOneMenu id="idRoles" style="width:100%"  value="#{loginSecurity.selectedRoleUsr}" >                               
+                                    <f:selectItem itemLabel="Seleccione rol" itemValue="0" />
+                                    <f:selectItems value="#{loginSecurity.listRoles}"/>
+
+                                </p:selectOneMenu>
+                            </div>
+
+                            <div class="p-field p-col-12 p-md-5">
+                                <p:outputLabel value="Estado" for="idEstado" />
+                                <p:selectOneMenu id="idEstado" style="width:100%"  value="#{loginSecurity.formUsreEstado}" >                               
+                                    <f:selectItem itemLabel="Seleccione estado" itemValue="" />
+                                    <f:selectItem itemLabel="Activo" itemValue="A" />
+                                    <f:selectItem itemLabel="InActivo" itemValue="I" />
+
+                                </p:selectOneMenu>
+                            </div>
+
+                            <div class="p-field p-col-12 p-md-2"></div>
+                            <div class="p-field p-col-12 p-md-2">
+                                <p:commandButton icon="fa fa-save" iconPos="right" update="@form msg :formTbl:tblUsuario"  action="#{loginSecurity.guardarUsuario()}" value="Guardar" />
+                            </div>
+                            <div class="p-field p-col-12 p-md-2">
+                                <p:commandButton icon="fa fa-eraser" iconPos="right" update="@form :formTbl:tblUsuario"      action="#{loginSecurity.limpiarUsuarios()}" value="Limpiar" />
+                            </div>
+
+                        </div>
+                    </div>
+                </h:form>  
+                <h:form id="formTbl">
+                    <div class="card">
+                        <div class="ui-fluid p-formgrid p-grid">
+
+                            <p:dataTable id="tblUsuario" var="usr" value="#{loginSecurity.listUsr}" 
+                                         reflow="true"
+                                         selection="#{loginSecurity.selectedRowUser}"                                         
+                                         paginatorPosition="bottom"
+                                         selectionMode="single"
+                                         rowsPerPageTemplate="5,10,15"
+                                         rowKey="#{usr.id}" paginator="true" rows="5">
+                                <f:facet name="header">
+                                    Listado de Usuarios
+                                </f:facet>
+                                
+
+                                <p:ajax event="rowSelect" listener="#{loginSecurity.loadSelectedRow}" update=":formUsr"/>
+                                
+                                <p:column width="150" style="font-weight: bold" headerText="Usuario App" >
+                                    
+                                        <h:outputText escape="false" style="font-weight: normal;" value="#{usr.usr}" />
+                                    
+                                </p:column>
+
+                                <p:column  style="font-weight: bold" headerText="Nombre Completo" >
+
+                                    <h:outputText style="font-weight: normal" value="#{usr.nombre}" />
+
+                                </p:column>
+
+                                <p:column  style="font-weight: bold" headerText="Correo Electronico" >
+
+                                    <h:outputText style="font-weight: normal" value="#{usr.correoElectronico}" />
+
+                                </p:column>
+
+                                <p:column width="100" style="font-weight: bold" headerText="Estado" >
+                                   
+                                        <h:outputText style="font-weight: normal"  value="#{usr.estado == 'A'?'Activo':'InActivo'}" />
+                                    
+                                </p:column>
+
+
+                            </p:dataTable>
+
+                        </div>
+                    </div>
+                </h:form>
+
+            </div>
+        </div>
+
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,67 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="content">
+
+        <div class="p-grid"> 
+            <div class="p-col-12">
+               
+                    <p:growl id="msg"/>
+                    <h:form>
+                        <div class="card">
+                            <div class="ui-fluid p-formgrid p-grid">
+
+                                <div class="p-field p-col-12 p-md-2"></div>
+                                <div class="p-field p-col-12 p-md-8">
+                                    <p:selectOneMenu id="idRoles" style="width:100%"  value="#{configMenuControllers.selectedRole}" >                               
+                                        <f:selectItem itemLabel="Seleccione rol" itemValue="" />
+                                        <f:selectItems value="#{configMenuControllers.listRoles}"/>
+                                        <p:ajax listener="#{configMenuControllers.loadDualList()}"     event="change"  update="pickList"/>
+                                    </p:selectOneMenu>
+                                </div>
+                                <div class="p-field p-col-12 p-md-2"></div>
+                                <div class="p-field p-col-12 p-md-2"></div>
+
+                                <div class="p-field p-col-12 p-md-8">
+                                    <p:pickList   id="pickList" value="#{configMenuControllers.listModel}" var="opc"  itemLabel="#{opc.descripcion}" itemValue="#{opc.id}"
+                                                  showSourceControls="false" 
+                                                  showTargetControls="false" 
+                                                  showSourceFilter="true" 
+                                                  showTargetFilter="true" 
+                                                  responsive="true">
+
+                                        <f:facet name="sourceCaption">Opciones Disponibles</f:facet>
+                                        <f:facet name="targetCaption">Opciones Asignadas</f:facet>
+                                        <p:column style="width:94%">
+                                            <div class="p-d-flex p-ai-center">
+                                                <span class="fa fa-fw #{opc.menuIcon}" style="width: 30px; height: 20px" />
+                                                <h:outputText value="#{opc.descripcion}"/>
+                                            </div>
+                                        </p:column>
+                                    </p:pickList>
+                                </div>
+                                <div class="p-field p-col-12 p-md-2"></div>
+                                <div class="p-field p-col-12 p-md-4"></div>
+                                <div class="p-field p-col-12 p-md-2">
+                                <p:commandButton icon="fa fa-save" iconPos="right" update="msg pickList"   action="#{configMenuControllers.guardarRoles()}" value="Guardar" />
+                                </div>
+                                <div class="p-field p-col-12 p-md-2">
+                                <p:commandButton icon="fa fa-eraser" iconPos="right" update="@form"   action="#{configMenuControllers.limpiarOpcionesRol()}" value="Limpiar" />
+                                </div>
+                                <div class="p-field p-col-12 p-md-4"></div>
+
+                            </div>
+                        </div>  
+                    </h:form>
+
+               
+            </div>
+        </div>
+
+    </ui:define>
+
+</ui:composition>

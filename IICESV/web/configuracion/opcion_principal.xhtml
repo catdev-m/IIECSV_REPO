@@ -1,0 +1,109 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="content">
+        <div class="p-grid"> 
+            <div class="p-col-12">
+                <p:growl id="msg"/>
+                <h:form id="formOpcionPrincipal">
+                    <div class="card">
+                        <div class="ui-fluid p-formgrid p-grid">
+
+
+                            <div class="p-field p-col-12 p-md-5">
+                                <p:outputLabel value="Nombre de opcion principal" for="acSimple" />
+                                <p:inputText maxlength="250" autocomplete="off" id="acSimple" value="#{configMenuControllers.formOpcPpDescripcion}" class="form-control-plaintext"  placeholder="Nombre de opcion principal"  />
+                            </div>
+                            <div class="p-field p-col-12 p-md-5">
+                                <p:outputLabel value="Icono de opcion" for="idIcon" />
+                                <p:selectOneMenu id="idIcon" filter="true" filterMatchMode="contains"    var="c"   value="#{configMenuControllers.formopcPpMenuIcon}" >                               
+
+                                    <f:selectItems var="ico" itemLabel="#{ico.icono}" itemValue="#{ico.icono}" value="#{configMenuControllers.listIcon}" />
+
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Icono"/>
+                                        </f:facet>
+                                        <span class="fa fa-fw #{c}"  />
+                                    </p:column>
+
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Nombre"/>
+                                        </f:facet>
+                                        <h:outputText value="#{c}"/>
+                                    </p:column>
+                                </p:selectOneMenu>
+                            </div>
+
+
+                            <div class="p-field p-col-12 p-md-5">
+                                <p:outputLabel value="Estado" for="Oppestado" />
+                                <p:selectOneMenu id="Oppestado" style="width:100%"  value="#{configMenuControllers.formOpcPpEstado}" >                               
+                                    <f:selectItem itemLabel="Seleccione estado" itemValue="" />
+                                    <f:selectItem itemLabel="Activo" itemValue="A" />
+                                    <f:selectItem itemLabel="Inactivo" itemValue="I" />
+                                </p:selectOneMenu>
+                            </div>
+                            <div class="p-field p-col-12 p-md-7"></div>
+
+                            <div class="p-field p-col-12 p-md-2">
+                                <p:commandButton icon="fa fa-save" iconPos="right"  update="@form :formTbl:tblOpcionPrincipal msg"  action="#{configMenuControllers.guardarOpcionPrincipal()}" value="Guardar" />
+                            </div>
+                            <div class="p-field p-col-12 p-md-2">
+                                <p:commandButton icon="fa fa-eraser" iconPos="right" update="@form :formTbl:tblOpcionPrincipal"   action="#{configMenuControllers.limpiarOpcionPrincipal()}" value="Limpiar" />
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </h:form>
+                <h:form id="formTbl">
+                    <div class="card">
+                        <div class="ui-fluid p-formgrid p-grid">
+
+                            <p:dataTable id="tblOpcionPrincipal" var="bk" value="#{configMenuControllers.listOpcionPrincipal}" 
+                                         reflow="true"
+                                         selection="#{configMenuControllers.selectedOpcionPrincipal}"
+                                         paginatorPosition="bottom"
+                                         selectionMode="single"
+                                         rowsPerPageTemplate="5,10,15"
+                                         rowKey="#{bk.id}" paginator="true" rows="5">
+                                <f:facet name="header">                                    
+                                    Listado de opciones principales
+                                </f:facet>
+                                <p:ajax event="rowSelect" listener="#{configMenuControllers.selectedRowsOpcionPrincipal}" update=":formOpcionPrincipal formTbl:tblOpcionPrincipal" />
+                                
+                                <p:column  style="font-weight: bold" headerText="Descripcion" >
+                                    
+                                        <h:outputText style="font-weight: normal" value="#{bk.descripcion}" />
+                                    
+                                </p:column>
+
+                                <p:column style="font-weight: bold" headerText="Estado" >
+                                    
+                                        <h:outputText style="font-weight: normal"  value="#{bk.status == 'A'?'Activo':'InActivo'}" />
+                                   
+                                </p:column>
+
+                                <p:column style="font-weight: bold" headerText="Icono" >
+                                    
+                                        <span class="fa fa-fw #{bk.menuIcon}"/>
+                                  
+                                </p:column>
+                            </p:dataTable>                       
+                        </div>
+                    </div>
+                </h:form>
+
+            </div>
+        </div>
+
+    </ui:define>
+
+</ui:composition>
