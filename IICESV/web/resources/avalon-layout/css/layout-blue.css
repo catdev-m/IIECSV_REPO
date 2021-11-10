@@ -2452,6 +2452,7 @@ p:last-child {
   background-color: #292b2c;
   width: 100%;
   min-height: 100%;
+  padding-bottom: 20px;
 }
 .wizard-body .wizard-wrapper .wizard-container .wizard-header {
   height: 100px;
