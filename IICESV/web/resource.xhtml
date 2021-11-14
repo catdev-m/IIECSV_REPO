@@ -1,0 +1,96 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="content">
+        <div class="p-grid"> 
+            <div class="p-col-12">
+                <p:growl id="msg"/>
+                <h:form id="formResourceCatalog">
+                    <div class="card">
+                        <div class="ui-fluid p-formgrid p-grid">
+
+
+                            <div class="p-field p-col-12 p-md-5">
+                                <p:outputLabel value="Nombre del material" for="nomMat" />
+                                <p:inputText maxlength="255" autocomplete="off" id="nomMat" value="#{resourceController.formResourceNombre}"  placeholder="Nombre del material" />
+                            </div>
+
+                            <div class="p-field p-col-12 p-md-5">
+                                <p:outputLabel value="Descripción" for="description" />
+                                <p:inputText maxlength="400" autocomplete="off" id="description" value="#{resourceController.formResourceDescripcion}"  placeholder="Descripción" />
+                            </div>
+                            <div class="p-field p-col-12 p-md-5">
+                                <p:outputLabel value="Precio" for="precioMat" />
+                                <p:inputText maxlength="20" autocomplete="off" id="precioMat" value="#{resourceController.formResourcePrecio}"  placeholder="Precio" />
+                            </div>
+
+                            <div class="p-field p-col-12 p-md-5">
+                                <p:outputLabel value="Estado" for="estadoMat" />
+                                <p:selectOneMenu id="estadoMat" style="width:100%"  value="#{resourceController.formResourceEstado}" >                               
+                                    <f:selectItem itemLabel="Seleccione estado" itemValue="" />
+                                    <f:selectItem itemLabel="Activo" itemValue="A" />
+                                    <f:selectItem itemLabel="Inactivo" itemValue="I" />
+                                </p:selectOneMenu>
+                            </div>
+                            <div class="p-field p-col-12 p-md-7"></div>
+
+                            <div class="p-field p-col-12 p-md-2">
+                                <p:commandButton icon="fa fa-save" iconPos="right"  update="@form :formTbl:tblResourceCatalog msg"  action="#{resourceController.guardarResource()}" value="Guardar" />
+                            </div>
+                            <div class="p-field p-col-12 p-md-2">
+                                <p:commandButton icon="fa fa-eraser" iconPos="right" update="@form :formTbl:tblResourceCatalog"   action="#{resourceController.limpiarResource()}" value="Limpiar" />
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+                <h:form id="formTbl">
+                    <div class="card">
+                        <div class="ui-fluid p-formgrid p-grid">
+
+                            <p:dataTable id="tblResourceCatalog" var="bk" value="#{resourceController.listRecursos}" 
+                                         reflow="true"
+                                         selection="#{resourceController.selectedResource}"
+                                         paginatorPosition="bottom"
+                                         selectionMode="single"
+                                         rowsPerPageTemplate="5,10,15"
+                                         rowKey="#{bk.id}" paginator="true" rows="5">
+                                <f:facet name="header">                                    
+                                    Listado de catalogo de recursos
+                                </f:facet>
+                                <p:ajax event="rowSelect" listener="#{resourceController.selectedRowsResource()}" update=":formResourceCatalog formTbl:tblResourceCatalog" />
+                                
+                                <p:column  style="font-weight: bold" headerText="Nombre" >
+                                    
+                                    <h:outputText style="font-weight: normal" value="#{bk.nombre}" />
+                                    
+                                </p:column>
+                                <p:column  style="font-weight: bold" headerText="Descripcion" >
+                                    
+                                    <h:outputText style="font-weight: normal" value="#{bk.descripcion}" />
+                                    
+                                </p:column>
+                                <p:column  style="font-weight: bold" headerText="Precio" >
+                                    
+                                    <h:outputText style="font-weight: normal" value="#{bk.precio}" />
+                                    
+                                </p:column>
+
+                                <p:column style="font-weight: bold" headerText="Estado" >
+                                    
+                                    <h:outputText style="font-weight: normal"  value="#{bk.estado == 'A'?'Activo':'InActivo'}" />
+                                   
+                                </p:column>
+                            </p:dataTable>                       
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+
+    </ui:define>
+
+</ui:composition>
