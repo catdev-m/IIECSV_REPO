@@ -4,20 +4,80 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/template.xhtml">
+    
     <ui:define name="content">
         <div class="p-grid"> 
             <div class="p-col-12">
                 <p:growl id="msg"/>
-                <h:form>
+                <h:form id="formActivityCatalog">
                     <div class="card">
                         <div class="ui-fluid p-formgrid p-grid">
-                            <div class="p-field p-col-12 p-md-5">
-                                En Desarrollo
+                           
+ 
+                                <div class="p-field p-col-12 p-md-5">
+                                <p:outputLabel value="Actividad" for="nomAct" />
+                                <p:inputText maxlength="255" autocomplete="off" id="nomAct" value="#{activityController.formActivityNombre}"  placeholder="Nombre de la actividad" />
+                                </div>
+                            
+                                <div class="p-field p-col-12 p-md-5">
+                                <p:outputLabel value="Estado" for="estadoMat" />
+                                <p:selectOneMenu id="estadoMat" style="width:100%"  value="#{activityController.formActivityEstado}" >                               
+                                    <f:selectItem itemLabel="Seleccione estado" itemValue="" />
+                                    <f:selectItem itemLabel="Activo" itemValue="A" />
+                                    <f:selectItem itemLabel="Inactivo" itemValue="I" />
+                                </p:selectOneMenu>
+                                </div>
+                                
+                            <div class="p-field p-col-12 p-md-2"></div>
+                            
+                            <div class="p-field p-col-12 p-md-2">
+                                <p:commandButton icon="fa fa-save" iconPos="right"  update="@form :formTbl:tblActivityCatalog msg"  action="#{activityController.guardarActivity()}" value="Guardar" />
                             </div>
+                            
+                            <div class="p-field p-col-12 p-md-2">
+                                <p:commandButton icon="fa fa-eraser" iconPos="right" update="@form :formTbl:tblActivityCatalog"   action="#{activityController.limpiarActivity()}" value="Limpiar" />
+                            </div>
+                            
+                            <div class="p-field p-col-12 p-md-2">
+                                <p:commandButton icon="fa fa-trash" iconPos="right" update="@form :formTbl:tblActivityCatalog"   action="#{activityController.eliminarActivity()}" value="Eliminar" />
+                            </div>
+                            
                         </div>
                     </div>
                 </h:form>
+                <h:form id="formTbl">
+                    <div class="card">
+                        <div class="ui-fluid p-formgrid p-grid">
+
+                            <p:dataTable id="tblActivityCatalog" var="bk" value="#{activityController.listActividades}" 
+                                         reflow="true"
+                                         selection="#{activityController.selectedActivity}"
+                                         paginatorPosition="bottom"
+                                         selectionMode="single"
+                                         rowsPerPageTemplate="5,10,15"
+                                         rowKey="#{bk.id_actividad}" paginator="true" rows="5">
+                                <f:facet name="header">                                    
+                                    Listado de catalogo de recursos
+                                </f:facet>
+                                <p:ajax event="rowSelect" listener="#{activityController.selectedRowsActivity()}" update=":formActivityCatalog formTbl:tblActivityCatalog" />
+                                
+                                <p:column  style="font-weight: bold" headerText="Nombre" >
+                                    
+                                    <h:outputText style="font-weight: normal" value="#{bk.nombre_actividad}" />
+                                    
+                                </p:column>
+
+                                <p:column style="font-weight: bold" headerText="Estado" >
+                                    
+                                    <h:outputText style="font-weight: normal"  value="#{bk.estado == 'A'?'Activo':'Inactivo'}" />
+                                   
+                                </p:column>
+                            </p:dataTable>                       
+                        </div>
+                    </div>
+                </h:form>
+ 
             </div>
         </div>
-    </ui:define>
+        </ui:define>
 </ui:composition>
