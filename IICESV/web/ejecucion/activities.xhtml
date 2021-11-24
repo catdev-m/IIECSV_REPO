@@ -28,22 +28,22 @@
                                 </p:selectOneMenu>
                                 </div>
                             
-                                <div class="p-field p-col-12 p-md-4">
+                                <div class="p-field p-col-12 p-md-5">
                                 <p:outputLabel for="idActividad" value="Id actividad"/>
-                                <p:inputNumber id="idActividad" value="#{activityController.formActivityIdActividad}" modifyValueOnWheel="false" />
+                                <p:inputNumber id="idActividad" value="#{activityController.formActivityIdActividad}" placeholder="Número de actividad" modifyValueOnWheel="false" />
                                 </div>
                             
-                                <div class="p-field p-col-12 p-md-4">
-                                <p:outputLabel for="idFase" value="Id Fase"/>
+                                <div class="p-field p-col-12 p-md-5">
+                                <p:outputLabel for="idFase" value="Fase"/>
                                 <p:inputNumber id="idFase" value="#{activityController.formActivityIdFase}" modifyValueOnWheel="false" />
                                 </div>
                             
-                            <div class="p-field p-col-12 p-md-4">
+                            <div class="p-field p-col-12 p-md-5">
                             <p:outputLabel for="button" value="Fecha de Creacion"/>
                             <p:datePicker id="button" value="#{activityController.formActivityFecha}" showIcon="true" locale="es" pattern="yyyy-MM-dd"/>
                             </div>
                             
-                            <div class="p-field p-col-12 p-md-2"></div>
+                            <div class="p-field p-col-12 p-md-7"></div>
                             
                             <div class="p-field p-col-12 p-md-2">
                                 <p:commandButton icon="fa fa-save" iconPos="right"  update="@form :formTbl:tblActivityCatalog msg"  action="#{activityController.guardarActivity()}" value="Guardar" />
@@ -54,7 +54,7 @@
                             </div>
                             
                             <div class="p-field p-col-12 p-md-2">
-                                <p:commandButton icon="fa fa-trash" iconPos="right" update="@form :formTbl:tblActivityCatalog"   action="#{activityController.eliminarActivity()}" value="Eliminar" />
+                                <p:commandButton icon="fa fa-trash" iconPos="right" update="@form :formTbl:tblActivityCatalog msg"   action="#{activityController.eliminarActivity()}" value="Eliminar" />
                             </div>
                             
                         </div>
@@ -72,21 +72,32 @@
                                          rowsPerPageTemplate="5,10,15"
                                          rowKey="#{bk.id_actividad}" paginator="true" rows="5">
                                 <f:facet name="header">                                    
-                                    Listado de catalogo de recursos
+                                    Listado de actividades
                                 </f:facet>
                                 <p:ajax event="rowSelect" listener="#{activityController.selectedRowsActivity()}" update=":formActivityCatalog formTbl:tblActivityCatalog" />
                                 
-                                <p:column  style="font-weight: bold" headerText="Nombre" >
+                                <p:column width="50" style="font-weight: bold" headerText="Id" >
+                                    
+                                    <h:outputText style="font-weight: normal" value="#{bk.id_actividad}" />
+                                    
+                                </p:column>
+                                <p:column width="300" style="font-weight: bold" headerText="Nombre" >
                                     
                                     <h:outputText style="font-weight: normal" value="#{bk.nombre_actividad}" />
                                     
                                 </p:column>
+                                <p:column width="50" style="font-weight: bold" headerText="Fase" >
+                                    
+                                    <h:outputText style="font-weight: normal" value="#{bk.id_fase}" />
+                                    
+                                </p:column>
 
-                                <p:column style="font-weight: bold" headerText="Estado" >
+                                <p:column  width="100" style="font-weight: bold" headerText="Estado" >
                                     
                                     <h:outputText style="font-weight: normal"  value="#{bk.estado == 'A'?'Activo':'Inactivo'}" />
                                    
                                 </p:column>
+
                             </p:dataTable>                       
                         </div>
                     </div>

@@ -60,6 +60,9 @@ public class ActivityController extends Utils implements Serializable {
         public void selectedRowsActivity() {
         formActivityNombre = selectedActivity.getNombre_actividad();
         formActivityEstado = selectedActivity.getEstado();
+        formActivityIdFase=selectedActivity.getId_fase();
+        formActivityIdActividad=selectedActivity.getId_actividad();
+        formActivityFecha=(Date) selectedActivity.getFecha_de_creacion();
         selectedRowsActivity = true;
         
 
@@ -124,6 +127,8 @@ public class ActivityController extends Utils implements Serializable {
         indexRowSelectedFormActivity=-1;
         formActivityNombre = "";
         formActivityEstado="";
+        formActivityIdActividad=Integer.valueOf(0);
+        formActivityIdFase=Integer.valueOf(0);
         selectedActivity  = new IiceActivityCatalog();
         listActividades = new ArrayList<>();
         listActividades = iSmfActivityServices.obtenerActivityCatalogs();
