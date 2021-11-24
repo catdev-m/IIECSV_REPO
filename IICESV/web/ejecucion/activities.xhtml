@@ -27,7 +27,22 @@
                                     <f:selectItem itemLabel="Inactivo" itemValue="I" />
                                 </p:selectOneMenu>
                                 </div>
-                                
+                            
+                                <div class="p-field p-col-12 p-md-4">
+                                <p:outputLabel for="idActividad" value="Id actividad"/>
+                                <p:inputNumber id="idActividad" value="#{activityController.formActivityIdActividad}" modifyValueOnWheel="false" />
+                                </div>
+                            
+                                <div class="p-field p-col-12 p-md-4">
+                                <p:outputLabel for="idFase" value="Id Fase"/>
+                                <p:inputNumber id="idFase" value="#{activityController.formActivityIdFase}" modifyValueOnWheel="false" />
+                                </div>
+                            
+                            <div class="p-field p-col-12 p-md-4">
+                            <p:outputLabel for="button" value="Fecha de Creacion"/>
+                            <p:datePicker id="button" value="#{activityController.formActivityFecha}" showIcon="true" locale="es" pattern="yyyy-MM-dd"/>
+                            </div>
+                            
                             <div class="p-field p-col-12 p-md-2"></div>
                             
                             <div class="p-field p-col-12 p-md-2">

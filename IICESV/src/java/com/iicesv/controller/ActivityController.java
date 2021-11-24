@@ -9,6 +9,7 @@ import com.iicesv.services.IActivityServices;
 import com.iicesv.entities.IiceActivityCatalog;
 import com.iicesv.utils.Utils;
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -20,6 +21,7 @@ import lombok.EqualsAndHashCode;
  *
  * @author User
  */
+
 @Named(value = "activityController")
 @SessionScoped
 @Data
@@ -33,7 +35,11 @@ public class ActivityController extends Utils implements Serializable {
     private IiceActivityCatalog selectedActivity;
     private IActivityServices iSmfActivityServices;
     private boolean selectedRowsActivity = false;
+    private Date formActivityFecha;
+    private int formActivityIdActividad = Integer.valueOf(0);
+    private int formActivityIdFase = Integer.valueOf(0);
 
+    
     public ActivityController() {
     }
     
@@ -60,7 +66,7 @@ public class ActivityController extends Utils implements Serializable {
     }
 
     public String guardarActivity() {
-        try {
+        //try {
 
             if (validNullString(formActivityNombre)) {
 
@@ -72,9 +78,14 @@ public class ActivityController extends Utils implements Serializable {
                 addSimpleMessagesError("Debe de seleccionar estado");
                 return null;
             }
+            
             IiceActivityCatalog opc = new IiceActivityCatalog();
             opc.setNombre_actividad(formActivityNombre);
             opc.setEstado(formActivityEstado);
+            opc.setFecha_de_creacion(formActivityFecha);
+            opc.setFecha_de_modificacion(formActivityFecha);
+            opc.setId_actividad(1);
+            opc.setId_fase(1);
             if (selectedRowsActivity) {
                  opc.setId_actividad(selectedActivity.getId_actividad());
             } else {
@@ -85,15 +96,27 @@ public class ActivityController extends Utils implements Serializable {
             addSimpleMessages("Datos guardados con exito");
             clearFormActivity();
 
-        } catch (Exception e) {
+        //} catch (Exception e) {
 
-            addSimpleMessagesError("Se genero un error al intentar guardar los datos");
+            //addSimpleMessagesError("Se genero un error al intentar guardar los datos");
 
-        }
+        //}
         return null;
     }
     
     public void eliminarActivity(){
+        try{
+            if (validNullString(formActivityNombre)) {
+
+                addSimpleMessagesError("Debe de digitar una actividad");
+            }
+
+            iSmfActivityServices.eliminar(selectedActivity);
+            
+            
+        }catch(Exception e){
+            addSimpleMessagesError("Se genero un error al intentar borrar los datos");
+        }
         
     }
 
@@ -110,4 +133,5 @@ public class ActivityController extends Utils implements Serializable {
         clearFormActivity();
         return null;
     }
+    
 }
