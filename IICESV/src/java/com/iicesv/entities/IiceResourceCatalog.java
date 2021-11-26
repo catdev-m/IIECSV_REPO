@@ -6,7 +6,6 @@
 package com.iicesv.entities;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,8 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -37,6 +34,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "IiceResourceCatalog.findByEstado", query = "SELECT i FROM IiceResourceCatalog i WHERE i.estado = :estado")})
 public class IiceResourceCatalog implements Serializable {
 
+    @Size(max = 100)
+    @Column(name = "fecha_creacion")
+    private String fechaCreacion;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -56,9 +57,6 @@ public class IiceResourceCatalog implements Serializable {
     @Size(max = 100)
     @Column(name = "precio")
     private String precio;
-    @Column(name = "fecha_creacion")
-    @Temporal(TemporalType.DATE)
-    private Date fechaCreacion;
     @Size(max = 45)
     @Column(name = "estado")
     private String estado;
@@ -108,11 +106,11 @@ public class IiceResourceCatalog implements Serializable {
         this.precio = precio;
     }
 
-    public Date getFechaCreacion() {
+    public String getFechaCreacion() {
         return fechaCreacion;
     }
 
-    public void setFechaCreacion(Date fechaCreacion) {
+    public void setFechaCreacion(String fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 

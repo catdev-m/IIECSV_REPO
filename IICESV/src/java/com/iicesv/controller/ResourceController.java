@@ -9,7 +9,10 @@ import com.iicesv.services.IResourceServices;
 import com.iicesv.entities.IiceResourceCatalog;
 import com.iicesv.utils.Utils;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -29,6 +32,9 @@ public class ResourceController extends Utils implements Serializable {
     private String formResourceNombre;
     private String formResourceDescripcion;
     private String formResourcePrecio;
+    private Date formFechaCreacion;
+    private Date selectFecha;
+    private String obtenerFecha;
     private String formResourceEstado;
     private List<IiceResourceCatalog> listRecursos;
     private IiceResourceCatalog selectedResource;
@@ -52,16 +58,24 @@ public class ResourceController extends Utils implements Serializable {
         iSmfResourceServices = ApplicationContextProvider.getApplicationContext().getBean(IResourceServices.class);
 
     }
-        public void selectedRowsResource() {
+        public void selectedRowsResource() throws ParseException {
         formResourceNombre = selectedResource.getNombre();
         formResourceDescripcion=selectedResource.getDescripcion();
         formResourcePrecio=selectedResource.getPrecio();
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        obtenerFecha=selectedResource.getFechaCreacion();
+        selectFecha=formato.parse(obtenerFecha);
+        formFechaCreacion = selectFecha;
         formResourceEstado = selectedResource.getEstado();
         selectedRowsResource = true;
         
 
     }
-
+        
+    public String fecha(){
+    SimpleDateFormat formato=new SimpleDateFormat("dd/MM/YYYY");
+    return formato.format(formFechaCreacion);
+    }
     public String guardarResource() {
         try {
 
@@ -79,6 +93,10 @@ public class ResourceController extends Utils implements Serializable {
                 addSimpleMessagesError("Debe de digitar el precio del material");
                 return null;
             }
+            if (formFechaCreacion==null) {
+                addSimpleMessagesError("Debe de seleccionar una fecha");
+                return null;
+            }
             if (validNullString(formResourceEstado)) {
                 addSimpleMessagesError("debe de seleccionar estado");
                 return null;
@@ -88,6 +106,7 @@ public class ResourceController extends Utils implements Serializable {
             opc.setDescripcion(formResourceDescripcion);
             opc.setPrecio(formResourcePrecio);
             opc.setEstado(formResourceEstado);
+            opc.setFechaCreacion(fecha());
             if (selectedRowsResource) {
                 opc.setId(selectedResource.getId());
             } else {
@@ -112,6 +131,7 @@ public class ResourceController extends Utils implements Serializable {
         formResourceDescripcion = "";
         formResourcePrecio = "";
         formResourceEstado="";
+        formFechaCreacion=null;
         selectedResource  = new IiceResourceCatalog();
         listRecursos = new ArrayList<>();
         listRecursos = iSmfResourceServices.obtenerResourceCatalogs();

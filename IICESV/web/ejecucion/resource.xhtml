@@ -27,7 +27,10 @@
                                 <p:outputLabel value="Precio" for="precioMat" />
                                 <p:inputText maxlength="20" autocomplete="off" id="precioMat" value="#{resourceController.formResourcePrecio}"  placeholder="Precio" />
                             </div>
-
+                            <div class="p-field p-col-12 p-md-5">
+                                <p:outputLabel value="Fecha de creación" for="fechaCreac"/>
+                                <p:calendar id="fechaCreac" value="#{resourceController.formFechaCreacion}" pattern="dd/MM/yyyy" showOn="button" placeholder="Fecha de creación" />
+                            </div>
                             <div class="p-field p-col-12 p-md-5">
                                 <p:outputLabel value="Estado" for="estadoMat" />
                                 <p:selectOneMenu id="estadoMat" style="width:100%"  value="#{resourceController.formResourceEstado}" >                               
@@ -36,8 +39,8 @@
                                     <f:selectItem itemLabel="Inactivo" itemValue="I" />
                                 </p:selectOneMenu>
                             </div>
+                            
                             <div class="p-field p-col-12 p-md-7"></div>
-
                             <div class="p-field p-col-12 p-md-2">
                                 <p:commandButton icon="fa fa-save" iconPos="right"  update="@form :formTbl:tblResourceCatalog msg"  action="#{resourceController.guardarResource()}" value="Guardar" />
                             </div>
@@ -76,6 +79,11 @@
                                 <p:column  style="font-weight: bold" headerText="Precio" >
                                     
                                     <h:outputText style="font-weight: normal" value="#{bk.precio}" />
+                                    
+                                </p:column>
+                                <p:column  style="font-weight: bold" headerText="Fecha de creacion" >
+                                    
+                                    <h:outputText style="font-weight: normal" value="#{bk.fechaCreacion}" />
                                     
                                 </p:column>
 
