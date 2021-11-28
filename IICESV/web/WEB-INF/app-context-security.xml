@@ -25,6 +25,7 @@
     
     <security:http auto-config="true" security="none" pattern="/faces/resources/**" />
     
+    <security:http auto-config="true" security="none" pattern="/faces/registrar.xhtml*" />
 	
     
    

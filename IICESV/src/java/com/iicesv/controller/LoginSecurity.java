@@ -66,6 +66,12 @@ public class LoginSecurity extends Utils implements Serializable {
     private IiceUsuarios selectedRowUser;
     private List<IiceUsuarios> listUsr;
     private List<SelectItem> listRoles;
+    
+    private String formNombre1;
+    private String formNombre2;
+    private String formApellido;
+    private String formApellido2;
+    private String formDocument;
 
     public LoginSecurity() {
     }
@@ -174,6 +180,12 @@ public class LoginSecurity extends Utils implements Serializable {
             addSimpleMessagesError("Debe de seleccionar un Estado");
             return null;
         }
+        
+        if (!validMail(formUsrCorreoElectronico)){
+            addSimpleMessagesError("Debe ingresar un formato de correo válido");
+            return null;
+        }
+        
         try {
             IiceUsuarios usr = new IiceUsuarios();
 
@@ -188,6 +200,53 @@ public class LoginSecurity extends Utils implements Serializable {
             usr.setEstado(formUsreEstado);
             usr.setId(idUser);
             usr.setNombre(formUsrNobreCompleto);
+            usr.setPassword("123");
+            usr.setUsr(formDocument);
+            iUsuariosServices.guardarUsuario(usr);
+
+            IiceRolUsuario rolUser = new IiceRolUsuario();
+            rolUser.setId(idRolUsuario);
+            rolUser.setIdRol(selectedRoleUsr);
+            rolUser.setIdUser(idUser);
+            iSmfRolUsuarioServices.guardarUsuarioRol(rolUser);
+            addSimpleMessages(" Usuario guardado con exito");
+            clearFormUsers();
+        } catch (NumberFormatException e) {
+
+            addMessagesError("Se genero un error al intentar guardar el usuario!");
+
+        }
+
+        return null;
+    }
+    
+      public String crearUsuario() {
+        int idUser = 0;
+        int idRolUsuario = 0;
+        if (validNullString(formNombre1)) {
+            addSimpleMessagesError("Primer nombre es requerido");
+            return null;
+        }
+        if (validNullString(formApellido)) {
+            addSimpleMessagesError("Apellido es requerido");
+            return null;
+        }
+
+        if (validNullString(formUsrCorreoElectronico)) {
+            addSimpleMessagesError("Correo Elecntronico es requerido");
+            return null;
+        }
+
+        try {
+            IiceUsuarios usr = new IiceUsuarios();
+
+            idUser = iUsuariosServices.nextId();
+            idRolUsuario = iSmfRolUsuarioServices.nextId();
+
+            usr.setCorreoElectronico(formUsrCorreoElectronico);
+            usr.setEstado("I");
+            usr.setId(idUser);
+            usr.setNombre(formNombre1+" "+formNombre2+" "+formApellido+" "+formApellido2);
             usr.setPassword(formUsrPassword);
             usr.setUsr(formUsrUserApp);
             iUsuariosServices.guardarUsuario(usr);

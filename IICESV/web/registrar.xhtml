@@ -122,32 +122,31 @@
                         <div class="p-grid forms">
                             <div class="p-col-12 p-md-6">
                                 <p:outputLabel for="name" value="Primer nombre" />
-                                <p:inputText id="name" placeholder="Primer nombre" styleClass="form-element" />
+                                <p:inputText id="name" placeholder="Primer nombre" styleClass="form-element" autocomplete="off" value="#{loginSecurity.formNombre1}"/>
 
                                 <p:outputLabel for="apellido" value="Primer apellido" />
-                                <p:inputText id="apellido" placeholder="Primer apellido" styleClass="form-element" />
+                                <p:inputText id="apellido" placeholder="Primer apellido" styleClass="form-element" autocomplete="off" value="#{loginSecurity.formApellido}"/>
 
                                 <p:outputLabel for="id_documento" value="Id documento" />
-                                <p:inputText id="id_documento" placeholder="Id documento" styleClass="form-element" />
+                                <p:inputText id="id_documento" placeholder="Id documento" styleClass="form-element" autocomplete="off" value="#{loginSecurity.formDocument}"/>
 
-                                <p:outputLabel for="password" value="Contraseña" />
-                                <p:password id="password" placeholder="Contraseña" styleClass="form-element" />
                             </div>
                             <div class="p-col-12 p-md-6">
 
                                 <p:outputLabel for="name2" value="Segundo nombre" />
-                                <p:inputText id="name2" placeholder="Segundo nombre" styleClass="form-element" />
+                                <p:inputText id="name2" placeholder="Segundo nombre" styleClass="form-element" autocomplete="off" value="#{loginSecurity.formNombre2}"/>
 
                                 <p:outputLabel for="apellido2" value="Segundo apellido" />
-                                <p:inputText id="apellido2" placeholder="Segundo apellido" styleClass="form-element" />
+                                <p:inputText id="apellido2" placeholder="Segundo apellido" styleClass="form-element" autocomplete="off" value="#{loginSecurity.formApellido2}"/>
 
                                 <p:outputLabel for="email" value="Email" />
-                                <p:inputText id="email" placeholder="Email" styleClass="form-element" />
+                                <p:inputText id="email" placeholder="Email" styleClass="form-element" autocomplete="off" value="#{loginSecurity.formUsrCorreoElectronico}"/>
 
                             </div>
                         </div>
                         <div class="p-grid button">
-                            <p:commandButton styleClass="continue-button" type="button" value="REGISTRARSE" style="width: 100%" />
+                            <p:commandButton styleClass="continue-button" type="button" value="REGISTRARME" action="#{loginSecurity.crearUsuario()}"/>
+                            <p:commandButton styleClass="continue-button" type="button" value="REGRESAR"  />
                         </div>
                     </div>
                 </div>
