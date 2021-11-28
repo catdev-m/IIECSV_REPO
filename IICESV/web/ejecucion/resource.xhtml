@@ -24,12 +24,12 @@
                                 <p:inputText maxlength="400" autocomplete="off" id="description" value="#{resourceController.formResourceDescripcion}"  placeholder="Descripción" />
                             </div>
                             <div class="p-field p-col-12 p-md-5">
-                                <p:outputLabel value="Precio" for="precioMat" />
-                                <p:inputText maxlength="20" autocomplete="off" id="precioMat" value="#{resourceController.formResourcePrecio}"  placeholder="Precio" />
+                                <p:outputLabel for="precio" value="Precio del material"/>
+                                <p:inputNumber id="precio" value="#{resourceController.formResourcePrecio}" modifyValueOnWheel="false" placeholder="Precio del material"/>
                             </div>
                             <div class="p-field p-col-12 p-md-5">
                                 <p:outputLabel value="Fecha de creación" for="fechaCreac"/>
-                                <p:calendar id="fechaCreac" value="#{resourceController.formFechaCreacion}" pattern="dd/MM/yyyy" showOn="button" placeholder="Fecha de creación" />
+                                <p:calendar id="fechaCreac" value="#{resourceController.formFechaCreacion}" pattern="dd/MM/yyyy" readonlyInput="true" showOn="button" placeholder="Fecha de creación" />
                             </div>
                             <div class="p-field p-col-12 p-md-5">
                                 <p:outputLabel value="Estado" for="estadoMat" />
