@@ -4,20 +4,96 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/template.xhtml">
+
     <ui:define name="content">
         <div class="p-grid"> 
             <div class="p-col-12">
                 <p:growl id="msg"/>
-                <h:form>
+                <h:form id="formInspeccionProyectos">
                     <div class="card">
                         <div class="ui-fluid p-formgrid p-grid">
+
                             <div class="p-field p-col-12 p-md-5">
-                                En Desarrollo
+                                <p:outputLabel value="Nombre del proyecto" for="nomProyect" />
+                                <p:inputText maxlength="100" autocomplete="off" id="nomProyect" value="#{inspeccionController.formProyectoNombre}"  placeholder="Nombre del proyecto" />
                             </div>
+
+                            <div class="p-field p-col-12 p-md-5">
+                                <p:outputLabel value="Fecha de inspección" for="fechaInspec"/>
+                                <p:calendar id="fechaInspec" value="#{inspeccionController.formFechaInspeccion}" pattern="dd/MM/yyyy" showOn="button" placeholder="Fecha de inspección" />
+                            </div>
+                            
+                            <div class="p-field p-col-12 p-md-5">
+                                <p:outputLabel value="Observaciones" for="obs" />
+                                <p:inputText maxlength="100" autocomplete="off" id="obs" value="#{inspeccionController.formObservaciones}"  placeholder="Observaciones" />
+                            </div>
+                            <div class="p-field p-col-12 p-md-5">
+                                <p:outputLabel value="Usuario" for="usr" />
+                                <p:inputText maxlength="100" autocomplete="off" id="usr" disabled="true" value="#{inspeccionController.obtenerUser()}"  placeholder="Usuario" />
+                            </div>
+                            <div class="p-field p-col-12 p-md-5">
+                                <p:outputLabel value="Estado" for="estadoInsp" />
+                                <p:selectOneMenu id="estadoInsp" style="width:100%"  value="#{inspeccionController.formInspeccionEstado}" >                               
+                                    <f:selectItem itemLabel="Seleccione el estado" itemValue="" />
+                                    <f:selectItem itemLabel="Activo" itemValue="A" />
+                                    <f:selectItem itemLabel="Inactivo" itemValue="I" />
+                                </p:selectOneMenu>
+                            </div>
+                            <div class="p-field p-col-12 p-md-7"></div>
+
+                            <div class="p-field p-col-12 p-md-2">
+                                <p:commandButton icon="fa fa-save" iconPos="right"  update="@form :formTbl:tblInspeccionProyectos msg"  action="#{inspeccionController.guardarInspeccion()}" value="Guardar" />
+                            </div>
+                            <div class="p-field p-col-12 p-md-2">
+                                <p:commandButton icon="fa fa-eraser" iconPos="right" update="@form :formTbl:tblInspeccionProyectos"   action="#{inspeccionController.limpiarInspeccion()}" value="Limpiar" />
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+                <h:form id="formTbl">
+                    <div class="card">
+                        <div class="ui-fluid p-formgrid p-grid">
+
+                            <p:dataTable id="tblInspeccionProyectos" var="bk" value="#{inspeccionController.listInspecciones}" 
+                                         reflow="true"
+                                         selection="#{inspeccionController.selectedInspeccion}"
+                                         paginatorPosition="bottom"
+                                         selectionMode="single"
+                                         rowsPerPageTemplate="5,10,15"
+                                         rowKey="#{bk.idInspeccion}" paginator="true" rows="5">
+                                <f:facet name="header">                                    
+                                    Listado de inspecciones
+                                </f:facet>
+                                <p:ajax event="rowSelect" listener="#{inspeccionController.selectedRowsInspeccion()}" update=":formInspeccionProyectos formTbl:tblInspeccionProyectos" />
+                                
+                                <p:column  style="font-weight: bold" headerText="Nombre del proyecto" >
+                                    
+                                    <h:outputText style="font-weight: normal" value="#{bk.nombreProyecto}" />
+                                    
+                                </p:column>
+                                <p:column  style="font-weight: bold" headerText="Fecha de Inspección" >
+                                    
+                                    <h:outputText style="font-weight: normal" value="#{bk.fechaInspeccion}" />
+                                    
+                                </p:column>
+                                <p:column  style="font-weight: bold" headerText="Observaciones" >
+                                    
+                                    <h:outputText style="font-weight: normal" value="#{bk.observaciones}" />
+                                    
+                                </p:column>
+
+                                <p:column style="font-weight: bold" headerText="Estado" >
+                                    
+                                    <h:outputText style="font-weight: normal"  value="#{bk.estado == 'A'?'Activo':'Inactivo'}" />
+                                   
+                                </p:column>
+                            </p:dataTable>                       
                         </div>
                     </div>
                 </h:form>
             </div>
         </div>
+
     </ui:define>
+
 </ui:composition>
