@@ -20,7 +20,7 @@
 
                             <div class="p-field p-col-12 p-md-5">
                                 <p:outputLabel value="Fecha de inspección" for="fechaInspec"/>
-                                <p:calendar id="fechaInspec" value="#{inspeccionController.formFechaInspeccion}" pattern="dd/MM/yyyy" showOn="button" placeholder="Fecha de inspección" />
+                                <p:calendar id="fechaInspec" value="#{inspeccionController.formFechaInspeccion}" pattern="dd/MM/yyyy" showOn="button" readonlyInput="true" placeholder="Fecha de inspección" />
                             </div>
                             
                             <div class="p-field p-col-12 p-md-5">
@@ -29,7 +29,7 @@
                             </div>
                             <div class="p-field p-col-12 p-md-5">
                                 <p:outputLabel value="Usuario" for="usr" />
-                                <p:inputText maxlength="100" autocomplete="off" id="usr" disabled="true" value="#{inspeccionController.obtenerUser()}"  placeholder="Usuario" />
+                                <p:inputText maxlength="100" autocomplete="off" id="usr" readonly="true" value="#{inspeccionController.obtenerUser()}"  placeholder="Usuario" />
                             </div>
                             <div class="p-field p-col-12 p-md-5">
                                 <p:outputLabel value="Estado" for="estadoInsp" />
