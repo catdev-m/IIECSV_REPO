@@ -14,8 +14,15 @@
                         <div class="ui-fluid p-formgrid p-grid">
 
                             <div class="p-field p-col-12 p-md-5">
-                                <p:outputLabel value="Nombre del proyecto" for="nomProyect" />
-                                <p:inputText maxlength="100" autocomplete="off" id="nomProyect" value="#{inspeccionController.formProyectoNombre}"  placeholder="Nombre del proyecto" />
+                                <p:outputLabel value="Nombre del proyecto" for="estadoInsp2" />
+                                <p:selectOneMenu id="estadoInsp2" style="width:100%"  value="#{inspeccionController.formIdProyecto}" >                               
+                                    <f:selectItem itemLabel="Seleccione el estado" itemValue="" />
+                                    <f:selectItems value="#{inspeccionController.listaForm}"/>
+                                   
+                                </p:selectOneMenu>
+                                
+                                
+                               
                             </div>
 
                             <div class="p-field p-col-12 p-md-5">

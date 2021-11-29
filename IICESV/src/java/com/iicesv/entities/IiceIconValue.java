@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author irvin_monterroza
+ * @author Denisse_monterroza
  */
 @Entity
 @Table(name = "iice_icon_value")

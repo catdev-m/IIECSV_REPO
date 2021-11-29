@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  *
- * @author irvin_monterroza
+ * @author Denisse_monterroza
  */
 @Repository
 public interface ISmfSubMenuUsersVReporsitory extends JpaRepository<IiceSubMenuUsersV, Integer>{

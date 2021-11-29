@@ -8,9 +8,7 @@ package com.iicesv.controller;
 import java.util.Date;
 import com.iicesv.config.ApplicationContextProvider;
 import com.iicesv.entities.IiceEjecucionFinanciera;
-import com.iicesv.services.iFinanzasServices;
 import com.iicesv.entities.IiceEjecucionFinanciera;
-import com.iicesv.services.iFinanzasServices;
 import com.iicesv.utils.Utils;
 import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import java.io.Serializable;
@@ -23,6 +21,8 @@ import javax.enterprise.context.SessionScoped;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import static org.primefaces.component.schedule.ScheduleBase.PropertyKeys.minTime;
+import com.iicesv.services.IFinanzasServices;
+import com.iicesv.services.IFinanzasServices;
 
 /**
  *
@@ -42,7 +42,7 @@ public class FinanzasController extends Utils implements Serializable {
     Date formFiananzasFecha = new Date(); 
     private List<IiceEjecucionFinanciera> listFinanzas;
     private IiceEjecucionFinanciera selectedFinanza;
-    private iFinanzasServices iSmfFinanzasServices;
+    private IFinanzasServices iSmfFinanzasServices;
     private boolean selectedRowsResource = false;
       
     public FinanzasController() {
@@ -59,7 +59,7 @@ public class FinanzasController extends Utils implements Serializable {
     
     public void loadContextBeanSring() {
 
-        iSmfFinanzasServices = ApplicationContextProvider.getApplicationContext().getBean(iFinanzasServices.class);
+        iSmfFinanzasServices = ApplicationContextProvider.getApplicationContext().getBean(IFinanzasServices.class);
 
     }
         public void selectedRowsResource() {

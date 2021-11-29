@@ -72,6 +72,8 @@ public class LoginSecurity extends Utils implements Serializable {
     private String formApellido;
     private String formApellido2;
     private String formDocument;
+    
+    private String rolRegistrarme;
 
     public LoginSecurity() {
     }
@@ -101,6 +103,12 @@ public class LoginSecurity extends Utils implements Serializable {
         return null;
     }
 
+    public String registOutcome(){
+    
+    
+    return "faces/registrar";
+    }
+    
     public String ingresar() {
 
         try {
@@ -200,7 +208,7 @@ public class LoginSecurity extends Utils implements Serializable {
             usr.setEstado(formUsreEstado);
             usr.setId(idUser);
             usr.setNombre(formUsrNobreCompleto);
-            usr.setPassword("123");
+            usr.setPassword(formUsrPassword);
             usr.setUsr(formDocument);
             iUsuariosServices.guardarUsuario(usr);
 
@@ -220,8 +228,9 @@ public class LoginSecurity extends Utils implements Serializable {
         return null;
     }
     
-      public String crearUsuario() {
-        int idUser = 0;
+    
+    public String registrarUsuario(){
+    int idUser = 0;
         int idRolUsuario = 0;
         if (validNullString(formNombre1)) {
             addSimpleMessagesError("Primer nombre es requerido");
@@ -236,6 +245,11 @@ public class LoginSecurity extends Utils implements Serializable {
             addSimpleMessagesError("Correo Elecntronico es requerido");
             return null;
         }
+        
+        if (validNullString(contraseniaregistrame)) {
+            addSimpleMessagesError("debe de digitar una contraseña");
+            return null;
+        }
 
         try {
             IiceUsuarios usr = new IiceUsuarios();
@@ -247,23 +261,37 @@ public class LoginSecurity extends Utils implements Serializable {
             usr.setEstado("I");
             usr.setId(idUser);
             usr.setNombre(formNombre1+" "+formNombre2+" "+formApellido+" "+formApellido2);
-            usr.setPassword(formUsrPassword);
-            usr.setUsr(formUsrUserApp);
+            usr.setPassword(contraseniaregistrame);
+            usr.setUsr(formUsrCorreoElectronico);
             iUsuariosServices.guardarUsuario(usr);
-
+            
+           
             IiceRolUsuario rolUser = new IiceRolUsuario();
             rolUser.setId(idRolUsuario);
-            rolUser.setIdRol(selectedRoleUsr);
+            rolUser.setIdRol(6);
             rolUser.setIdUser(idUser);
-            iSmfRolUsuarioServices.guardarUsuarioRol(rolUser);
-            addSimpleMessages(" Usuario guardado con exito");
-            clearFormUsers();
+           iSmfRolUsuarioServices.guardarUsuarioRol(rolUser);
+           addSimpleMessages(" Usuario guardado con exito");
+           
+           formNombre1 ="";
+           formNombre2="";
+           formApellido="";
+           formApellido="";
+           formApellido2="";
+           formUsrCorreoElectronico="";
+           contraseniaregistrame="";
+           
         } catch (NumberFormatException e) {
 
             addMessagesError("Se genero un error al intentar guardar el usuario!");
 
         }
 
+        return null;
+    }
+    
+    private String contraseniaregistrame;
+      public String crearUsuario() {
         return null;
     }
 

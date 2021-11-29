@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  *
- * @author irvin_monterroza
+ * @author Denisse_monterroza
  */
 @Repository
 public interface IUsuariosRepository extends JpaRepository<IiceUsuarios, Integer> {
@@ -25,7 +25,7 @@ public interface IUsuariosRepository extends JpaRepository<IiceUsuarios, Integer
     public IiceUsuarios findByUsr(String usr);
     
     
-    @Query(value = "select * from  iice_usuarios  where estado='A' ", nativeQuery = true)
+    @Query(value = "select * from  iice_usuarios  ", nativeQuery = true)
     public List<IiceUsuarios> obtenerUsuariosActivos();
 
 }

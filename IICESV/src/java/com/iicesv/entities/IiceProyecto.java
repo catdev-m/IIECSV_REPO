@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -21,21 +23,15 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Irvin
+ * @author nivrist
  */
 @Entity
 @Table(name = "iice_proyecto")
-@NamedQueries({
-    @NamedQuery(name = "IiceProyecto.findAll", query = "SELECT i FROM IiceProyecto i")
-    , @NamedQuery(name = "IiceProyecto.findByIdProyecto", query = "SELECT i FROM IiceProyecto i WHERE i.idProyecto = :idProyecto")
-    , @NamedQuery(name = "IiceProyecto.findByNombreProyecto", query = "SELECT i FROM IiceProyecto i WHERE i.nombreProyecto = :nombreProyecto")
-    , @NamedQuery(name = "IiceProyecto.findByPresupuesto", query = "SELECT i FROM IiceProyecto i WHERE i.presupuesto = :presupuesto")
-    , @NamedQuery(name = "IiceProyecto.findByFechaCreacion", query = "SELECT i FROM IiceProyecto i WHERE i.fechaCreacion = :fechaCreacion")
-    , @NamedQuery(name = "IiceProyecto.findByFechaModificacion", query = "SELECT i FROM IiceProyecto i WHERE i.fechaModificacion = :fechaModificacion")
-    , @NamedQuery(name = "IiceProyecto.findByEstado", query = "SELECT i FROM IiceProyecto i WHERE i.estado = :estado")})
+@XmlRootElement
 public class IiceProyecto implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,7 +42,7 @@ public class IiceProyecto implements Serializable {
     private Integer idProyecto;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 10)
+    @Size(min = 1, max = 100)
     @Column(name = "nombre_proyecto")
     private String nombreProyecto;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -69,6 +65,9 @@ public class IiceProyecto implements Serializable {
     @Size(min = 1, max = 10)
     @Column(name = "estado")
     private String estado;
+    @JoinColumn(name = "id_fase", referencedColumnName = "id_fase")
+    @ManyToOne
+    private IiecFases idFase;
 
     public IiceProyecto() {
     }
@@ -132,6 +131,14 @@ public class IiceProyecto implements Serializable {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public IiecFases getIdFase() {
+        return idFase;
+    }
+
+    public void setIdFase(IiecFases idFase) {
+        this.idFase = idFase;
     }
 
     @Override

@@ -9,7 +9,7 @@ import com.iicesv.entities.IiceRolUsuario;
 
 /**
  *
- * @author irvin_monterroza
+ * @author Denisse_monterroza
  */
 public interface ISmfRolUsuarioServices {
     

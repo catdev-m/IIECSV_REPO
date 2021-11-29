@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author irvin_monterroza
+ * @author Denisse_monterroza
  */
 @Entity
 @Table(name = "iice_opcion_principal")

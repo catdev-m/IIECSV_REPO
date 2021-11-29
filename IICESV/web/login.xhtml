@@ -60,12 +60,12 @@
                         <div  class="p-col-12 p-md-6 button-pane">
                             <p:commandButton value="Ingresar" ajax="false" actionListener="#{loginSecurity.ingresar()}" />
                         </div>
-                        <div class="ui-g-12 ui-sm-6 ui-md-6" style="padding:12px;">
-                            <a href="registrar.xhtml" class="ui-link ui-widget forget-password">Registrarme</a>
+                        <div class="ui-g-12 ui-sm-6 ui-md-6" >                           
+                           <p:button value="Registrarme" outcome="/registrar" />
                         </div>
 
                         <div class="ui-g-12 ui-sm-6 ui-md-6" style="padding:12px;">
-                            <a href="#" style="display: block" class="forget-password">Forget Password?</a>
+                            <a href="#" style="display: none" class="forget-password">Forget Password?</a>
                         </div>
                     </div>
                 </h:form>

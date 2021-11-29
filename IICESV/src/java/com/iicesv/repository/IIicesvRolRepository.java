@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  *
- * @author irvin_monterroza
+ * @author Denisse_monterroza
  */
 @Repository
 public interface IIicesvRolRepository extends JpaRepository<IiceRol, Integer>{

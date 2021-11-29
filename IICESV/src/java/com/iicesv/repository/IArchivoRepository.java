@@ -5,15 +5,18 @@
  */
 package com.iicesv.repository;
 
-import com.iicesv.entities.IiceIconValue;
+import com.iicesv.entities.IiceArchivo;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
  *
- * @author Denisse_monterroza
+ * @author nivrist
  */
+
 @Repository
-public interface ISmfIconValueRepository extends JpaRepository<IiceIconValue, Integer>{
-    
+public interface IArchivoRepository extends JpaRepository<IiceArchivo, Integer>{
+     @Query(nativeQuery = true, value = "SELECT ifnull(max(id_archivo)+1,1) FROM iice_archivo")
+     public int nextId();
 }

@@ -10,149 +10,69 @@
             <meta name="apple-mobile-web-app-capable" content="yes" />
         </f:facet>
         <title>PrimeFaces Avalon Wizard</title>
-        <script type="text/javascript">
-            //<![CDATA[
-            var Wizard = {
-                init: function () {
-                    this.wizardContainer = $('.wizard-container');
-                    if (this.wizardContainer.length) {
-                        this.wizardContent = this.wizardContainer.find('.wizard-content');
-                        this.tabs = this.wizardContainer.find('.wizard-header .wizard-tabs-container > .wizard-tab');
-                        this.selectedTab = this.tabs.eq(0);
-
-                        var continueButton = $('.continue-button'),
-                                $this = this;
-
-                        this.tabs.off('click.wizard-tab', '.tab-header').on('click.wizard-tab', '.tab-header', null, function () {
-                            var tab = $(this).closest('.wizard-tab');
-
-                            if (!tab.is($this.selectedTab)) {
-                                if ($this.selectedTab.index() < tab.index()) {
-                                    var firstActiveTab = tab.prevAll('.active-tab:first');
-                                    $this.activateItems(firstActiveTab);
-                                } else {
-                                    var latestActiveTab = tab.nextAll('.active-tab:last');
-                                    $this.deactivateItems(latestActiveTab);
-                                }
-
-                                $this.selectedTab = tab;
-                            }
-                        });
-
-                        continueButton.off('click.cbutton').on('click.cbutton', function () {
-                            var content = $(this).closest('.wizard-content'),
-                                    index = content.index(),
-                                    nextTab = $this.tabs.eq(index);
-
-                            nextTab.children('.tab-header').trigger('click.wizard-tab');
-                        });
-                    }
-                },
-
-                activateItems: function (tab) {
-                    var nextItem = tab.next();
-                    $this = this;
-
-                    nextItem.addClass('active-tab');
-                    clearTimeout(this.deactivateItems);
-
-                    this.activateTimeout = setTimeout(function () {
-                        if (!nextItem.is($this.selectedTab)) {
-                            $this.activateItems(nextItem);
-                        } else {
-                            $this.wizardContent.filter('.active-content').removeClass('active-content').end().eq($this.selectedTab.index()).addClass('active-content');
-                        }
-                    }, 600);
-                },
-
-                deactivateItems: function (tab) {
-                    tab.removeClass('active-tab');
-
-                    var prevItem = tab.prev();
-                    $this = this;
-
-                    clearTimeout(this.deactivateItems);
-
-                    clearTimeout(this.activateItems);
-                    this.deactivateTimeout = setTimeout(function () {
-                        if (!prevItem.is($this.selectedTab)) {
-                            $this.deactivateItems(prevItem);
-                        } else {
-                            $this.wizardContent.filter('.active-content').removeClass('active-content').end().eq($this.selectedTab.index()).addClass('active-content');
-                        }
-                    }, 600);
-                },
-
-                selectOrderInfo: function (itemSelector, orderSelector) {
-                    var selectedItem = $(itemSelector),
-                            selectedOrder = $(orderSelector);
-
-                    $('.tier-card').removeClass('active-tier-card');
-                    selectedItem.addClass('active-tier-card');
-                    selectedOrder.siblings().removeClass('selected-order').end().addClass('selected-order');
-
-                    this.selectedTab.next().children('.tab-header').trigger('click.wizard-tab');
-                }
-            }
-
-            $(function () {
-                Wizard.init();
-            });
-            //]]>
-        </script>
+        
     </h:head>
 
     <h:body styleClass="wizard-body">
-        <div class="wizard-wrapper">
-            <div class="wizard-container">
-                <div class="wizard-content register active-content">
-                    <div class="content-header">
-                        <div class="p-grid">
-                            <div class="p-col-6 title">
-                                <h1>REGISTRO</h1>
-                                <span>Por favor complete los campos para registrarse</span>
-                            </div>
-                            <div class="p-col-6 icon">
-                                <p:graphicImage name="images/extensions/icon-register.svg" styleClass="layout-image"
-                                                library="avalon-layout" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="content">
-                        <div class="p-grid forms">
-                            <div class="p-col-12 p-md-6">
-                                <p:outputLabel for="name" value="Primer nombre" />
-                                <p:inputText id="name" placeholder="Primer nombre" styleClass="form-element" autocomplete="off" value="#{loginSecurity.formNombre1}"/>
-
-                                <p:outputLabel for="apellido" value="Primer apellido" />
-                                <p:inputText id="apellido" placeholder="Primer apellido" styleClass="form-element" autocomplete="off" value="#{loginSecurity.formApellido}"/>
-
-                                <p:outputLabel for="id_documento" value="Id documento" />
-                                <p:inputText id="id_documento" placeholder="Id documento" styleClass="form-element" autocomplete="off" value="#{loginSecurity.formDocument}"/>
-
-                            </div>
-                            <div class="p-col-12 p-md-6">
-
-                                <p:outputLabel for="name2" value="Segundo nombre" />
-                                <p:inputText id="name2" placeholder="Segundo nombre" styleClass="form-element" autocomplete="off" value="#{loginSecurity.formNombre2}"/>
-
-                                <p:outputLabel for="apellido2" value="Segundo apellido" />
-                                <p:inputText id="apellido2" placeholder="Segundo apellido" styleClass="form-element" autocomplete="off" value="#{loginSecurity.formApellido2}"/>
-
-                                <p:outputLabel for="email" value="Email" />
-                                <p:inputText id="email" placeholder="Email" styleClass="form-element" autocomplete="off" value="#{loginSecurity.formUsrCorreoElectronico}"/>
-
+        <h:form>
+            <p:growl></p:growl>
+            <div class="wizard-wrapper">
+                <div class="wizard-container">
+                    <div class="wizard-content register active-content">
+                        <div class="content-header">
+                            <div class="p-grid">
+                                <div class="p-col-6 title">
+                                    <h1>REGISTRO</h1>
+                                    <span>Por favor complete los campos para registrarse</span>
+                                </div>
+                                <div class="p-col-6 icon">
+                                    <p:graphicImage name="images/extensions/icon-register.svg" styleClass="layout-image"
+                                                    library="avalon-layout" />
+                                </div>
                             </div>
                         </div>
-                        <div class="p-grid button">
-                            <p:commandButton styleClass="continue-button" type="button" value="REGISTRARME" action="#{loginSecurity.crearUsuario()}"/>
-                            <p:commandButton styleClass="continue-button" type="button" value="REGRESAR"  />
+                        <div class="content">
+                            <div class="p-grid forms">
+                                <div class="p-col-12 p-md-6">
+                                    <p:outputLabel for="name" value="Primer nombre" />
+                                    <p:inputText id="name" placeholder="Primer nombre" styleClass="form-element" autocomplete="off" value="#{loginSecurity.formNombre1}"/>
+
+                                    <p:outputLabel for="apellido" value="Primer apellido" />
+                                    <p:inputText id="apellido" placeholder="Primer apellido" styleClass="form-element" autocomplete="off" value="#{loginSecurity.formApellido}"/>
+
+                                    <p:outputLabel for="email" value="Email" />
+                                    <p:inputText id="email" placeholder="Email" styleClass="form-element" autocomplete="off" value="#{loginSecurity.formUsrCorreoElectronico}"/>
+
+
+
+                                </div>
+                                <div class="p-col-12 p-md-6">
+
+                                    <p:outputLabel for="name2" value="Segundo nombre" />
+                                    <p:inputText id="name2" placeholder="Segundo nombre" styleClass="form-element" autocomplete="off" value="#{loginSecurity.formNombre2}"/>
+
+                                    <p:outputLabel for="apellido2" value="Segundo apellido" />
+                                    <p:inputText id="apellido2" placeholder="Segundo apellido" styleClass="form-element" autocomplete="off" value="#{loginSecurity.formApellido2}"/>
+
+                                    <p:outputLabel value="contraseña" for="pass" />
+                                    <p:password maxlength="20" autocomplete="off" id="pass" redisplay="true"  styleClass="form-element" value="#{loginSecurity.contraseniaregistrame}"/>
+
+
+
+                                </div>
+                            </div>
+                            <div class="p-grid button">
+                                <p:commandButton  styleClass="form-element" value="REGISTRARME" action="#{loginSecurity.registrarUsuario()}" update="@form"  />
+                                <p:button styleClass="form-element" value="Login" outcome="/login" />
+                                
+                            </div>
+                           
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
+        </h:form>
         <h:outputStylesheet name="css/primeflex.min.css" library="avalon-layout" />
         <h:outputStylesheet name="css/layout-#{guestPreferences.theme}.css" library="avalon-layout" />
     </h:body>

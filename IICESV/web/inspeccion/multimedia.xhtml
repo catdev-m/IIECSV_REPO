@@ -4,20 +4,84 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/template.xhtml">
-    <ui:define name="content">
+<ui:define name="content">
         <div class="p-grid"> 
             <div class="p-col-12">
                 <p:growl id="msg"/>
-                <h:form>
+                <h:form id="formMultimedia" enctype="multipart/form-data" >
                     <div class="card">
                         <div class="ui-fluid p-formgrid p-grid">
+
                             <div class="p-field p-col-12 p-md-5">
-                                En Desarrollo
+                                <p:outputLabel value="Proyecto" for="estadoInsp2" />
+                                <p:selectOneMenu id="estadoInsp2" style="width:100%"  value="#{inspeccionController.formSelectedProyectoMultimedia}" >                               
+                                    <f:selectItem itemLabel="Seleccione el estado" itemValue="" />
+                                    <f:selectItems value="#{inspeccionController.listaForm}"/>
+                                   
+                                </p:selectOneMenu>
                             </div>
+                            <div class="p-field p-col-12 p-md-5">
+                                <p:outputLabel value="Descripcion de archivo" for="descar" />
+                                <p:inputText id="descar" value="#{inspeccionController.descripcionArchivo}" ></p:inputText>
+                            </div>
+                        </div>
+                        <div class="ui-fluid p-formgrid p-grid">
+                            <div class="p-field p-col-12 p-md-5">
+                            <h5>Cargar Archivo</h5>
+                                
+                            <p:fileUpload value="#{inspeccionController.file}" mode="simple" skinSimple="true"/>
+
+                               
+                               
+                            </div>
+                            
+                            <div class="p-field p-col-12 p-md-7"></div>
+
+                            <div class="p-field p-col-12 p-md-2">
+                                <p:commandButton icon="fa fa-save" iconPos="right" ajax="false" update="@form :formTbl:tblMultimedia msg"  action="#{inspeccionController.guardarMultimedia()}" value="Guardar" />
+                            </div>
+                            <div class="p-field p-col-12 p-md-2">
+                                <p:commandButton icon="fa fa-eraser" iconPos="right" update="@form :formTbl:tblMultimedia"   action="#{inspeccionController.limpiarInspeccion()}" value="Limpiar" />
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+                <h:form id="formTbl">
+                    <div class="card">
+                        <div class="ui-fluid p-formgrid p-grid">
+
+                            <p:dataTable id="tblMultimedia" var="bk" value="#{inspeccionController.listaMultimedia}" 
+                                         reflow="true"
+                                         paginatorPosition="bottom"
+                                         selectionMode="single"
+                                         rowsPerPageTemplate="5,10,15"
+                                         rowKey="#{bk.idArchivo}" paginator="true" rows="5">
+                                <f:facet name="header">                                    
+                                    Listado de Archivos
+                                </f:facet>
+                                
+                                 <p:column  style="font-weight: bold" headerText="Nombre del archivo" >                                    
+                                     <h:outputText style="font-weight: normal" value="#{bk.nombreArchivo}" />                                    
+                                </p:column>
+                                <p:column  style="font-weight: bold" headerText="Descripción del archivo" >                                    
+                                    <h:outputText style="font-weight: normal" value="#{bk.descripcion}" />                                    
+                                </p:column>
+                                <p:column  style="font-weight: bold" headerText="Fecha de creación" >                                    
+                                    <h:outputText style="font-weight: normal" value="#{bk.fechaCreacion}" >                                   
+                                     <f:convertDateTime pattern="dd/MM/yyyy" />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column  style="font-weight: bold" headerText="Descargar Archivo" >                                    
+                                    <a download="#{bk.nombreArchivo}" href="data:#{bk.tipoArchivo};base64,#{bk.archivo}">Download</a>                       
+                                </p:column>
+
+                            </p:dataTable>                       
                         </div>
                     </div>
                 </h:form>
             </div>
         </div>
+
     </ui:define>
+
 </ui:composition>

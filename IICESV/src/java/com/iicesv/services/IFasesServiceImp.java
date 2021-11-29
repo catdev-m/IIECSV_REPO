@@ -5,25 +5,27 @@
  */
 package com.iicesv.services;
 
-
-import com.iicesv.entities.IiceIconValue;
-import com.iicesv.repository.ISmfIconValueRepository;
-import java.io.Serializable;
+import com.iicesv.entities.IiecFases;
+import com.iicesv.repository.IFasesRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
  *
- * @author Denisse_monterroza
+ * @author Denisse
  */
+
 @Service
-public class SmfIconValueServicesImpl implements ISmfIconValueServices , Serializable{
+public class IFasesServiceImp implements IFasesServices{
+
     @Autowired
-    ISmfIconValueRepository  iSmfIconValueRepository;
+    IFasesRepository iFasesRepository;
     
     @Override
-    public List<IiceIconValue> obetnerIconos() {
-                return iSmfIconValueRepository.findAll();
+    public List<IiecFases> obtenerFases() {
+        return iFasesRepository.findAll();
     }
+
+    
 }

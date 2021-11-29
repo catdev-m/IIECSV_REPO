@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author Irvin
  */
-public interface iFinanzasServices {
+public interface IFinanzasServices {
     public IiceEjecucionFinanciera guardar(IiceEjecucionFinanciera bk);
     public IiceEjecucionFinanciera actualizar(IiceEjecucionFinanciera bk);
     public void eliminar(IiceEjecucionFinanciera bk);

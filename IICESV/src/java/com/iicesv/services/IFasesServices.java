@@ -5,14 +5,13 @@
  */
 package com.iicesv.services;
 
-import com.iicesv.entities.IiceSubMenuUsersV;
+import com.iicesv.entities.IiecFases;
 import java.util.List;
 
 /**
  *
- * @author Denisse_monterroza
+ * @author Denisse
  */
-public interface ISmfSubMenuUsersVServices {
-    
-    public List<IiceSubMenuUsersV> obtenerSubMenu(int idOpcPpal , String usr , int idRol);
+public interface IFasesServices {
+        public List<IiecFases> obtenerFases();
 }

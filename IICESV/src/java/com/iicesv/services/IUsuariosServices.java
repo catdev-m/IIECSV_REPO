@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  *
- * @author irvin_monterroza
+ * @author Denisse_monterroza
  */
 public interface IUsuariosServices{
     

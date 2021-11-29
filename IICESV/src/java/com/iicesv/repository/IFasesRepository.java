@@ -3,17 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.iicesv.services;
+package com.iicesv.repository;
 
-import com.iicesv.entities.IiceIconValue;
-import java.util.List;
+import com.iicesv.entities.IiecFases;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author Denisse
  */
-public interface ISmfIconValueServices {
-    
-    public List<IiceIconValue> obetnerIconos();
+public interface IFasesRepository extends JpaRepository<IiecFases, Integer>{
     
 }

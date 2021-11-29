@@ -14,11 +14,11 @@ import org.springframework.stereotype.Service;
 
 /**
  *
- * @author Irvin
+ * @author Denisse
  */
 
 @Service
-public class SmFinanzasServicesImpl implements iFinanzasServices , Serializable{
+public class SmFinanzasServicesImpl implements IFinanzasServices , Serializable{
     @Autowired
     iFinanzasRepository iFinanzasRepository;
 

@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 
 /**
  *
- * @author irvin_monterroza
+ * @author Denisse_monterroza
  */
 public interface ISmfOpcionPrincipalRepository extends JpaRepository<IiceOpcionPrincipal, Integer>{
     

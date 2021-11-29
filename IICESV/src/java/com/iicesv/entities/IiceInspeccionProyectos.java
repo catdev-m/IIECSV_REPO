@@ -6,6 +6,7 @@
 package com.iicesv.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,24 +14,25 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author USUARIO
+ * @author Denisse
  */
 @Entity
 @Table(name = "iice_inspeccion_proyectos")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "IiceInspeccionProyectos.findAll", query = "SELECT i FROM IiceInspeccionProyectos i")
     , @NamedQuery(name = "IiceInspeccionProyectos.findByIdInspeccion", query = "SELECT i FROM IiceInspeccionProyectos i WHERE i.idInspeccion = :idInspeccion")
-    , @NamedQuery(name = "IiceInspeccionProyectos.findByNombreProyecto", query = "SELECT i FROM IiceInspeccionProyectos i WHERE i.nombreProyecto = :nombreProyecto")
-    , @NamedQuery(name = "IiceInspeccionProyectos.findByObservaciones", query = "SELECT i FROM IiceInspeccionProyectos i WHERE i.observaciones = :observaciones")
+    , @NamedQuery(name = "IiceInspeccionProyectos.findByIdProyecto", query = "SELECT i FROM IiceInspeccionProyectos i WHERE i.idProyecto = :idProyecto")
     , @NamedQuery(name = "IiceInspeccionProyectos.findByEstado", query = "SELECT i FROM IiceInspeccionProyectos i WHERE i.estado = :estado")
-    , @NamedQuery(name = "IiceInspeccionProyectos.findByFechaInspeccion", query = "SELECT i FROM IiceInspeccionProyectos i WHERE i.fechaInspeccion = :fechaInspeccion")})
+    , @NamedQuery(name = "IiceInspeccionProyectos.findByFechaInspeccion", query = "SELECT i FROM IiceInspeccionProyectos i WHERE i.fechaInspeccion = :fechaInspeccion")
+    , @NamedQuery(name = "IiceInspeccionProyectos.findByNombreProyecto", query = "SELECT i FROM IiceInspeccionProyectos i WHERE i.nombreProyecto = :nombreProyecto")
+    , @NamedQuery(name = "IiceInspeccionProyectos.findByObservaciones", query = "SELECT i FROM IiceInspeccionProyectos i WHERE i.observaciones = :observaciones")})
 public class IiceInspeccionProyectos implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,19 +41,22 @@ public class IiceInspeccionProyectos implements Serializable {
     @NotNull
     @Column(name = "id_inspeccion")
     private Integer idInspeccion;
-    
-    @Size(max = 100)
-    @Column(name = "nombre_proyecto")
-    private String nombreProyecto;
-    @Size(max = 100)
-    @Column(name = "observaciones")
-    private String observaciones;
-    @Size(max = 45)
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "id_proyecto")
+    private int idProyecto;
+    @Size(max = 255)
     @Column(name = "estado")
     private String estado;
-    @Size(max = 100)
     @Column(name = "fecha_inspeccion")
-    private String fechaInspeccion;
+    @Temporal(TemporalType.DATE)
+    private Date fechaInspeccion;
+    @Size(max = 255)
+    @Column(name = "nombre_proyecto")
+    private String nombreProyecto;
+    @Size(max = 255)
+    @Column(name = "observaciones")
+    private String observaciones;
 
     public IiceInspeccionProyectos() {
     }
@@ -60,12 +65,41 @@ public class IiceInspeccionProyectos implements Serializable {
         this.idInspeccion = idInspeccion;
     }
 
+    public IiceInspeccionProyectos(Integer idInspeccion, int idProyecto) {
+        this.idInspeccion = idInspeccion;
+        this.idProyecto = idProyecto;
+    }
+
     public Integer getIdInspeccion() {
         return idInspeccion;
     }
 
     public void setIdInspeccion(Integer idInspeccion) {
         this.idInspeccion = idInspeccion;
+    }
+
+    public int getIdProyecto() {
+        return idProyecto;
+    }
+
+    public void setIdProyecto(int idProyecto) {
+        this.idProyecto = idProyecto;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public Date getFechaInspeccion() {
+        return fechaInspeccion;
+    }
+
+    public void setFechaInspeccion(Date fechaInspeccion) {
+        this.fechaInspeccion = fechaInspeccion;
     }
 
     public String getNombreProyecto() {
@@ -82,22 +116,6 @@ public class IiceInspeccionProyectos implements Serializable {
 
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public String getFechaInspeccion() {
-        return fechaInspeccion;
-    }
-
-    public void setFechaInspeccion(String fechaInspeccion) {
-        this.fechaInspeccion = fechaInspeccion;
     }
 
     @Override
