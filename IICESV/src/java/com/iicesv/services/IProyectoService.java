@@ -6,6 +6,8 @@
 package com.iicesv.services;
 
 import com.iicesv.dto.ListaProyectosDto;
+import com.iicesv.dto.ListadorecursosPorActividadDTO;
+import com.iicesv.dto.ProyectoActividadDTO;
 import com.iicesv.entities.IiceProyecto;
 import java.util.List;
 
@@ -24,6 +26,8 @@ public interface IProyectoService {
     public List<Object[]> cargarFases();
     public List<Object[]> cargarActividadesByIdFase(int idFase);
     public List<Object[]> obtenerRecursos();
+    public List<ProyectoActividadDTO> obtenerActividadesPorProyectoyFase(int idProyecto , int idFase);
+    public List<ListadorecursosPorActividadDTO> obtenerRecursosPorProyectoyActividad(int idProyecto, int idActividad);
     
     public String obtenerNombreFase(int idfase);
     public String obtenerNombreActividad(int idActividad);

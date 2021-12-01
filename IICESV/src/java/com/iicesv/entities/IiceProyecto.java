@@ -51,12 +51,10 @@ public class IiceProyecto implements Serializable {
     @Column(name = "presupuesto")
     private BigDecimal presupuesto;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "fecha_creacion")
     @Temporal(TemporalType.DATE)
     private Date fechaCreacion;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "fecha_modificacion")
     @Temporal(TemporalType.DATE)
     private Date fechaModificacion;
@@ -68,7 +66,8 @@ public class IiceProyecto implements Serializable {
     @JoinColumn(name = "id_fase", referencedColumnName = "id_fase")
     @ManyToOne
     private IiecFases idFase;
-
+    @Column(name = "porc_avance")
+    private Integer porcAvance;
     public IiceProyecto() {
     }
 
@@ -85,6 +84,15 @@ public class IiceProyecto implements Serializable {
         this.estado = estado;
     }
 
+    public Integer getPorcAvance() {
+        return porcAvance;
+    }
+
+    public void setPorcAvance(Integer porcAvance) {
+        this.porcAvance = porcAvance;
+    }
+
+    
     public Integer getIdProyecto() {
         return idProyecto;
     }

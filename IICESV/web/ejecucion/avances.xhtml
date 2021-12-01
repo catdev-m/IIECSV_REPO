@@ -12,8 +12,62 @@
                     <div class="card">
                         <div class="ui-fluid p-formgrid p-grid">
                             <div class="p-field p-col-12 p-md-5">
-                                En Desarrollo
+                                <p:outputLabel style="font-weight: bold" value="Proyecto" for="estadoInsp2" />
+                                <p:selectOneMenu id="estadoInsp2" style="width:100%"  value="#{inspeccionController.formSelectedProyectoMultimedia}" >                               
+                                    <f:selectItem itemLabel="Seleccione el estado" itemValue="0" />
+                                    <f:selectItems value="#{inspeccionController.listaFormAvance}"/>
+
+                                </p:selectOneMenu>
                             </div>
+
+                            <div class="p-field p-col-12 p-md-5">                                
+                                <p:outputLabel style="font-weight: bold" value="Porcentaje de Avance"  />                                  
+                                <p:inputText rendered="false" style="font-weight: bold" id="sliderTxtMin" value="#{sliderView.number1}"  />
+                                <h:panelGrid columns="1" style="margin-bottom: 10px">
+                                    <h:outputText id="output" value="I.........................#{inspeccionController.procentajeAvance}%...........................F"/>
+                                    <h:inputHidden id="txt2" value="#{inspeccionController.procentajeAvance}"/>
+                                    <p:slider for="txt2" display="output" style="width: 200px" displayTemplate="I.........................{value}%...........................F"/>
+                                </h:panelGrid>
+                            </div>
+
+                            <div class="p-field p-col-12 p-md-2"> </div>
+                            <div class="p-field p-col-12 p-md-3">
+                                <p:commandButton update="@form,msg" action="#{inspeccionController.guardarPorcentajeAvance()}" value="Agregar porcentaje"></p:commandButton>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="ui-fluid p-formgrid p-grid">
+
+                            <p:dataTable id="tblProyectos" var="bk" value="#{inspeccionController.listadoTablaProyecto}" 
+                                         reflow="true"
+                                         selectionMode="single"
+                                         selection="#{inspeccionController.selectedProyectPorcentaje}"
+                                         paginatorPosition="bottom"                                                                
+                                         rowsPerPageTemplate="5,10,15"
+                                         rowKey="#{bk.idProyecto}" paginator="true" rows="5">
+                                <f:facet name="header">                                    
+                                    Listado de Proyectos
+                                </f:facet>
+                                <p:ajax event="rowSelect" listener="#{inspeccionController.selectedProyectoPorcentaje()}" update="@form"/>
+                                <p:column  style="font-weight: bold" headerText="Nombre del Proyecto" >                                    
+                                    <h:outputText style="font-weight: normal" value="#{bk.nombreProyecto}" />                                    
+                                </p:column>
+                                <p:column  style="font-weight: bold" headerText="Presupuesto" >                                    
+                                    <h:outputText style="font-weight: normal" value="#{bk.presupuesto}" />                                    
+                                </p:column>
+                                <p:column  style="font-weight: bold" headerText="Fase" >                                    
+                                    <h:outputText style="font-weight: normal" value="#{bk.idFase.fase}" >                                   
+
+                                    </h:outputText>
+                                </p:column>    
+                                <p:column  style="font-weight: bold" headerText="Porcentaje de avance" >                                                            
+                                    <h:outputText style="font-weight: normal" value="#{(bk.porcAvance == null ? 0  : bk.porcAvance )}%" />
+                                </p:column>
+
+                            </p:dataTable>                       
                         </div>
                     </div>
                 </h:form>

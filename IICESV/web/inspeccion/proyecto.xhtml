@@ -8,10 +8,10 @@
         <div class="p-grid"> 
             <div class="p-col-12">
                 <p:growl id="msg"/>
-                <h:form>
+                <h:form id="formProyecto">
                     <div class="card">
 
-                        <p:tabView>
+                        <p:tabView id="tabProyecto" activeIndex="#{inspeccionController.activeTabIndex}">
                             <p:tab title="Proyecto">
                                 <div class="ui-fluid p-formgrid p-grid">
                                     <div class="p-field p-col-12 p-md-3">
@@ -29,53 +29,68 @@
                                     </div>
                                     <div class="p-field p-col-12 p-md-3">
                                         <p:outputLabel value="Presupuesto" for="formPresupuesto" />
-                                        <p:inputText id="formPresupuesto" value="#{inspeccionController.descripcionDeProyecto}" ></p:inputText>
+                                        <p:inputText id="formPresupuesto" value="#{inspeccionController.formPresupuesto}" ></p:inputText>
                                     </div>
                                     <div class="p-field p-col-12 p-md-3">
-                                        
+                                        <p:outputLabel value="Estado" for="formEstadoproy" />
+                                        <p:selectOneMenu id="formEstadoproy" style="width:100%"  value="#{inspeccionController.estadoProyecto}" >  
+                                            <f:selectItem itemLabel="Seleccione estado" itemValue="" />
+                                            <f:selectItem itemLabel="Activo" itemValue="A" />
+                                            <f:selectItem itemLabel="InActivo" itemValue="I" />
+                                            
+
+                                        </p:selectOneMenu>
                                     </div>
+                                   
                                     <div class="p-field p-col-12 p-md-3">
-                                        <p:commandButton value="Crear Proyecto"></p:commandButton>
+                                        <p:commandButton action="#{inspeccionController.crearProyecto()}" update="msg,tblProyectos,estadoInsp2,formEstadoproy,formPresupuesto,formfase" value="Crear Proyecto"></p:commandButton>
                                     </div>
                                     <div class="p-field p-col-12 p-md-12">
-                                      
-                                            <div class="card">
-                                                <div class="ui-fluid p-formgrid p-grid">
 
-                                                    <p:dataTable id="tblProyectos" var="bk" value="#{inspeccionController.listadoTablaProyecto}" 
-                                                                 reflow="true"
-                                                                 paginatorPosition="bottom"
-                                                                 selectionMode="single"
-                                                                 rowsPerPageTemplate="5,10,15"
-                                                                 rowKey="#{bk.idProyecto}" paginator="true" rows="5">
-                                                        <f:facet name="header">                                    
-                                                            Listado de Proyectos
-                                                        </f:facet>
+                                        <div class="card">
+                                            <div class="ui-fluid p-formgrid p-grid">
 
-                                                        <p:column  style="font-weight: bold" headerText="Nombre del Proyecto" >                                    
-                                                            <h:outputText style="font-weight: normal" value="#{bk.nombreProyecto}" />                                    
-                                                        </p:column>
-                                                        <p:column  style="font-weight: bold" headerText="Presupuesto" >                                    
-                                                            <h:outputText style="font-weight: normal" value="#{bk.presupuesto}" />                                    
-                                                        </p:column>
-                                                        <p:column  style="font-weight: bold" headerText="Fase" >                                    
-                                                            <h:outputText style="font-weight: normal" value="#{bk.idFase.fase}" >                                   
-                                                               
-                                                            </h:outputText>
-                                                        </p:column>                                                        
+                                                <p:dataTable id="tblProyectos" var="bk" value="#{inspeccionController.listadoTablaProyecto}" 
+                                                             reflow="true"
+                                                             paginatorPosition="bottom"                                                                
+                                                             rowsPerPageTemplate="5,10,15"
+                                                             rowKey="#{bk.idProyecto}" paginator="true" rows="5">
+                                                    <f:facet name="header">                                    
+                                                        Listado de Proyectos
+                                                    </f:facet>
 
-                                                    </p:dataTable>                       
-                                                </div>
+                                                    <p:column  style="font-weight: bold" headerText="Nombre del Proyecto" >                                    
+                                                        <h:outputText style="font-weight: normal" value="#{bk.nombreProyecto}" />                                    
+                                                    </p:column>
+                                                    <p:column  style="font-weight: bold" headerText="Presupuesto" >                                    
+                                                        <h:outputText style="font-weight: normal" value="#{bk.presupuesto}" />                                    
+                                                    </p:column>
+                                                    <p:column  style="font-weight: bold" headerText="Fase" >                                    
+                                                        <h:outputText style="font-weight: normal" value="#{bk.idFase.fase}" >                                   
+
+                                                        </h:outputText>
+                                                    </p:column>    
+                                                    <p:column  style="font-weight: bold" headerText="" >                                                            
+                                                        <p:commandLink update=":formProyecto:tabProyecto :formProyecto:tabProyecto:idFaseSelected2 :formProyecto:tabProyecto:formActivi :formProyecto:tabProyecto:proyectoSeleccionadoid1 :formProyecto:tabProyecto:proyectoSeleccionadoid2 :formProyecto:tabProyecto:idFaseSelecte2" actionListener="#{inspeccionController.seleccionarTabActividad(bk)}" value="Agregar/Ver Actividades"/>                                    
+                                                    </p:column>
+
+                                                </p:dataTable>                       
                                             </div>
-                                        
+                                        </div>
+
                                     </div>
                                 </div>
                             </p:tab>
                             <p:tab title="Actividades">
                                 <div class="ui-fluid p-formgrid p-grid">
                                     <div class="p-field p-col-12 p-md-3">
+                                        <p:outputLabel value="Proyecto" for="proyectoSeleccionadoid1"  /> 
+                                        <p:inputText disabled="true" id="proyectoSeleccionadoid1" value="#{inspeccionController.proyectoSeleccionadoRow}" ></p:inputText>
+                                    </div>
+                                    
+                                    <div class="p-field p-col-12 p-md-3">
                                         <p:outputLabel value="Fase seleccionada" for="idFaseSelected"  /> 
-                                        <p:inputText readonly="true" disabled="true" id="idFaseSelected" value="#{inspeccionController.selectedDecripcionFase}" ></p:inputText>
+                                        <p:inputText disabled="true" id="idFaseSelected" value="#{inspeccionController.selectedDecripcionFase}" ></p:inputText>
                                     </div>
                                     <div class="p-field p-col-12 p-md-3">
                                         <p:outputLabel value="Actividades" for="formActivi" />
@@ -85,45 +100,50 @@
                                             <f:selectItems value="#{inspeccionController.litadoActividades}"/>
                                         </p:selectOneMenu>
                                     </div>
-                                    <div class="p-field p-col-12 p-md-6">
+                                    <div class="p-field p-col-12 p-md-3">
 
                                     </div>
 
                                     <div class="p-field p-col-12 p-md-3">
-                                        <p:commandButton actionListener="#{inspeccionController.agregarAvtividad()}" update="@form" value="Agregar Actividad"></p:commandButton>
+                                        <p:commandButton actionListener="#{inspeccionController.agregarAvtividad()}" update="formActivi,tbActividades,msg" value="Agregar Actividad"></p:commandButton>
                                     </div>
 
                                     <div class="p-field p-col-12 p-md-12">
-                                        
-                                            <div class="card">
-                                                <div class="ui-fluid p-formgrid p-grid">
 
-                                                    <p:dataTable id="tbActividades" var="bk" value="#{inspeccionController.listadoActividades}" 
-                                                                 reflow="true"
-                                                                 paginatorPosition="bottom"
-                                                                 selectionMode="single"
-                                                                 rowsPerPageTemplate="5,10,15"
-                                                                 rowKey="#{bk.id}" paginator="true" rows="5">
-                                                        <f:facet name="header">                                    
-                                                            Listado de Actividades
-                                                        </f:facet>
+                                        <div class="card">
+                                            <div class="ui-fluid p-formgrid p-grid">
 
-                                                        <p:column  style="font-weight: bold" headerText="Nombre Actividad" >                                    
-                                                            <h:outputText style="font-weight: normal" value="#{bk.nombreActividad}" />                                    
-                                                        </p:column> 
-                                                        
-                                                        <p:column  style="font-weight: bold" headerText="fecha creacion" >                                    
-                                                            <h:outputText style="font-weight: normal" value="#{bk.fechaCreacion}" >
-                                                             <f:convertDateTime pattern="dd/MM/yyyy" />
-                                                            </h:outputText>                                    
-                                                        </p:column>    
-                                                        
-                                                        
+                                                <p:dataTable id="tbActividades" var="bk" value="#{inspeccionController.listadoActividades}" 
+                                                             reflow="true"
+                                                             paginatorPosition="bottom"
+                                                             rowsPerPageTemplate="5,10,15"
+                                                             rowKey="#{bk.id}" paginator="true" rows="5">
+                                                    <f:facet name="header">                                    
+                                                        Listado de Actividades
+                                                    </f:facet>
 
-                                                    </p:dataTable>                       
-                                                </div>
+                                                    <p:column  style="font-weight: bold" headerText="Nombre Actividad" >                                    
+                                                        <h:outputText style="font-weight: normal" value="#{bk.nombreActividad}" />                                    
+                                                    </p:column> 
+
+                                                    <p:column  style="font-weight: bold" headerText="fecha creacion" >                                    
+                                                        <h:outputText style="font-weight: normal" value="#{bk.fechaCreacion}" >
+                                                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                                                        </h:outputText>                                    
+                                                    </p:column>    
+                                                    <p:column  style="font-weight: bold" headerText="" >                                                            
+                                                        <p:commandLink update=":formProyecto:tabProyecto :formProyecto:tabProyecto:idFaseSelected2 :formProyecto:tabProyecto:tblRecursos" actionListener="#{inspeccionController.seleccionarTabRecurso(bk)}" value="Agregar/Ver Recursos"/>                                    
+                                                    </p:column>
+                                                    <p:column  style="font-weight: bold" headerText="" >                                                            
+                                                        <p:commandLink update="msg,tbActividades" actionListener="#{inspeccionController.eliminarActividad(bk)}"  value="Eliminar Actividad"/>                                    
+                                                    </p:column>
+
+
+
+                                                </p:dataTable>                       
                                             </div>
-                                        
+                                        </div>
+
                                     </div>
 
                                 </div>
@@ -133,7 +153,16 @@
                             <p:tab title="Recursos">
                                 <div class="ui-fluid p-formgrid p-grid">
                                     <div class="p-field p-col-12 p-md-3">
-                                        <p:outputLabel value="Actividad seleccionada" for="idFaseSelected2"  /> 
+                                        <p:outputLabel value="Proyecto" for="proyectoSeleccionadoid2"  /> 
+                                        <p:inputText disabled="true" id="proyectoSeleccionadoid2" value="#{inspeccionController.proyectoSeleccionadoRow}" ></p:inputText>
+                                    </div>
+                                    
+                                    <div class="p-field p-col-12 p-md-3">
+                                        <p:outputLabel value="Fase" for="idFaseSelecte2"  /> 
+                                        <p:inputText disabled="true" id="idFaseSelecte2" value="#{inspeccionController.selectedDecripcionFase}" ></p:inputText>
+                                    </div>
+                                    <div class="p-field p-col-12 p-md-3">
+                                        <p:outputLabel value="Actividad" for="idFaseSelected2"  /> 
                                         <p:inputText readonly="true" disabled="true" id="idFaseSelected2" value="#{inspeccionController.selectedDecripcionActividad}" ></p:inputText>
                                     </div>
 
@@ -144,47 +173,44 @@
                                             <f:selectItems value="#{inspeccionController.litadoRecursos}"/>
                                         </p:selectOneMenu>
                                     </div>
-                                    <div class="p-field p-col-12 p-md-6">
-
-                                    </div>
+                                   
                                     <div class="p-field p-col-12 p-md-3">
-                                        <p:commandButton value="Agregar recurso"></p:commandButton>
+                                        <p:commandButton action="#{inspeccionController.agregarrecurso()}" update="tblRecursos,formrecu,msg" value="Agregar recurso"></p:commandButton>
                                     </div>
 
                                     <div class="p-field p-col-12 p-md-12">
-                                      
-                                            <div class="card">
-                                                <div class="ui-fluid p-formgrid p-grid">
 
-                                                    <p:dataTable id="tblRecursos" var="bk" value="#{inspeccionController.listaMultimedia}" 
-                                                                 reflow="true"
-                                                                 paginatorPosition="bottom"
-                                                                 selectionMode="single"
-                                                                 rowsPerPageTemplate="5,10,15"
-                                                                 rowKey="#{bk.idArchivo}" paginator="true" rows="5">
-                                                        <f:facet name="header">                                    
-                                                            Listado de Recursos
-                                                        </f:facet>
+                                        <div class="card">
+                                            <div class="ui-fluid p-formgrid p-grid">
 
-                                                        <p:column  style="font-weight: bold" headerText="Nombre del archivo" >                                    
-                                                            <h:outputText style="font-weight: normal" value="#{bk.nombreArchivo}" />                                    
-                                                        </p:column>
-                                                        <p:column  style="font-weight: bold" headerText="Descripción del archivo" >                                    
-                                                            <h:outputText style="font-weight: normal" value="#{bk.descripcion}" />                                    
-                                                        </p:column>
-                                                        <p:column  style="font-weight: bold" headerText="Fecha de creación" >                                    
-                                                            <h:outputText style="font-weight: normal" value="#{bk.fechaCreacion}" >                                   
-                                                                <f:convertDateTime pattern="dd/MM/yyyy" />
-                                                            </h:outputText>
-                                                        </p:column>
-                                                        <p:column  style="font-weight: bold" headerText="Descargar Archivo" >                                    
-                                                            <a download="#{bk.nombreArchivo}" href="data:#{bk.tipoArchivo};base64,#{bk.archivo}">Download</a>                       
-                                                        </p:column>
+                                                <p:dataTable id="tblRecursos" var="bk" value="#{inspeccionController.listadoRecursosXActividad}" 
+                                                             reflow="true"
+                                                             paginatorPosition="bottom"
+                                                             selectionMode="single"
+                                                             rowsPerPageTemplate="5,10,15"
+                                                             rowKey="#{bk.id}" paginator="true" rows="5">
+                                                    <f:facet name="header">                                    
+                                                        Listado de Recursos
+                                                    </f:facet>
 
-                                                    </p:dataTable>                       
-                                                </div>
+                                                    <p:column  style="font-weight: bold" headerText="Nombre del recurso" >                                    
+                                                        <h:outputText style="font-weight: normal" value="#{bk.descripcionRecurso}" />                                    
+                                                    </p:column>
+
+                                                    <p:column  style="font-weight: bold" headerText="Fecha de creación" >                                    
+                                                        <h:outputText style="font-weight: normal" value="#{bk.fechaCreacion}" >                                   
+                                                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                                                        </h:outputText>
+                                                    </p:column>
+                                                    <p:column  style="font-weight: bold" headerText="" >                                                            
+                                                        <p:commandLink update="msg,tblRecursos" actionListener="#{inspeccionController.eliminarRecurso(bk)}" value="Eliminar recurso"/>                                    
+                                                    </p:column>
+
+
+                                                </p:dataTable>                       
                                             </div>
-                                      
+                                        </div>
+
                                     </div>
 
                                 </div>

@@ -14,4 +14,5 @@ import java.util.List;
  */
 public interface IFasesServices {
         public List<IiecFases> obtenerFases();
+        public IiecFases obtenerFase(int idFase);
 }

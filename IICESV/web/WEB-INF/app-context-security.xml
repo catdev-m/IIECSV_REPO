@@ -31,8 +31,8 @@
    
     <security:http auto-config="true">
         
-        <security:intercept-url pattern="/faces/view/**" access="hasAnyRole('ROLE_DEVELOPER','ROLE_ADMIN','ROLE_USER','ROLE_TECH')" />
-        <security:intercept-url pattern="/faces/configuracion/**" access="hasAnyRole('ROLE_DEVELOPER','ROLE_ADMIN','ROLE_USER','ROLE_TECH')" />
+        <security:intercept-url pattern="/faces/view/**" access="hasAnyRole('ROLE_CONTRATISTA','ROLE_ADMIN','ROLE_SUPERVISOR')" />
+        <security:intercept-url pattern="/faces/configuracion/**" access="hasAnyRole('ROLE_CONTRATISTA','ROLE_ADMIN','ROLE_SUPERVISOR')" />
         
         <security:form-login login-page="/faces/login.xhtml" 
                              default-target-url="/faces/view/index.xhtml"

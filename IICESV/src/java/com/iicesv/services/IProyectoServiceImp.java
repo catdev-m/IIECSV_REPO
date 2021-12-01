@@ -6,11 +6,18 @@
 package com.iicesv.services;
 
 import com.iicesv.dto.ListaProyectosDto;
+import com.iicesv.dto.ListadorecursosPorActividadDTO;
+import com.iicesv.dto.ProyectoActividadDTO;
 import com.iicesv.entities.IiceProyecto;
 import com.iicesv.repository.IProyectoRepository;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -90,6 +97,56 @@ public class IProyectoServiceImp implements IProyectoService, Serializable {
     @Override
     public String obtenerNombreActividad(int idActividad) {
         return iProyectoRepository.obtenerNombreActividad(idActividad);
+    }
+
+    @Override
+    public List<ProyectoActividadDTO> obtenerActividadesPorProyectoyFase(int idProyecto, int idFase) {
+        
+        List<ProyectoActividadDTO> lista = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+         try {
+        for(Object[] obj : iProyectoRepository.obtenerActividadesPorProyectoyFase(idProyecto, idFase)){
+            ProyectoActividadDTO data = new ProyectoActividadDTO();
+            data.setId(Integer.parseInt(obj[0].toString()));
+            data.setIdActividad(Integer.parseInt(obj[1].toString()));
+            data.setNombreActividad((obj[2].toString()));
+            data.setIdProyecto(Integer.parseInt(obj[3].toString()));
+            data.setIdFase(Integer.parseInt(obj[4].toString()));
+            data.setFechaCreacion(sdf.parse(obj[5].toString()));
+           
+            lista.add(data);
+        
+        }
+         } catch (ParseException ex) {
+                Logger.getLogger(IProyectoServiceImp.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+        return lista;
+        
+    }
+
+    @Override
+    public List<ListadorecursosPorActividadDTO> obtenerRecursosPorProyectoyActividad(int idProyecto, int idActividad) {
+        List<ListadorecursosPorActividadDTO> lista = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+         try {
+        for(Object[] obj : iProyectoRepository.obtenerRecursosPorProyectoyActividad(idProyecto, idActividad)){
+            ListadorecursosPorActividadDTO data = new ListadorecursosPorActividadDTO();
+            data.setId(Integer.parseInt(obj[0].toString()));
+            data.setIdRecurso(Integer.parseInt(obj[1].toString()));
+            data.setIdActividad(Integer.parseInt(obj[2].toString()));
+            data.setIdProyecto(Integer.parseInt(obj[3].toString()));
+            data.setDescripcionRecurso((obj[4].toString()));
+            data.setFechaCreacion(sdf.parse(obj[5].toString()));
+           
+            lista.add(data);
+        
+        }
+         } catch (ParseException ex) {
+                Logger.getLogger(IProyectoServiceImp.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+        return lista;
     }
 
 }

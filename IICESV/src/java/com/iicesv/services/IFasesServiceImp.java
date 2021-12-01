@@ -27,5 +27,10 @@ public class IFasesServiceImp implements IFasesServices{
         return iFasesRepository.findAll();
     }
 
+    @Override
+    public IiecFases obtenerFase(int idFase) {
+       return iFasesRepository.findOne(idFase);
+    }
+
     
 }
